@@ -1,0 +1,23 @@
+done: 
+    method to find university and professor id
+need to do:
+    method to query to the page of the professor eg https://www.ratemyprofessors.com/professor/517854
+        this should be super light bcs we're just adding on an id to the query string
+        we should have it return it as a string for now
+    method to scrape all grades found in the reviews
+        need to watch out for reviews that don't have any grades posted
+    method to scrape all written reviews
+        probably just return it as an arraylist for now
+    method to find all unique classes in a professor's reviews
+        would be a little hard just bcs user inconsistency for class names but we'll see 
+        also would be nice to have it return a hashmap where the keys r the classes and the 
+        vals r the avg grades, we'll see tho if not its fine
+    method that uses gpt api to summarize the written reviews
+
+    then we have to do UI 
+        if its too hard we could just have it as a console program but ui would be insane
+    after ui is done with all parts above integrated we could also use postgreSQL and have our own database for
+    user logins and maybe even search history but this is only if everything else came super easy and we have time/
+    motivation for it
+
+    let me know if theres anything else we could do or if im missing out on something
