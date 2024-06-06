@@ -1,9 +1,15 @@
 package com.searchmaster;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
+import edu.stanford.nlp.pipeline.*;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.CoreMap;
+import org.ejml.simple.SimpleMatrix;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -74,6 +80,28 @@ public class App {
             return reviews;
         }
 
+        public static long[][] getSentiment(String paragraph) {
+            Properties props = new Properties();
+            props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
+            StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+            Annotation document = pipeline.process(paragraph);
+            Collection<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
+            int length = sentences.size();
+            long[][] sentiments = new long[length][5];
+            Tree tree = null;
+            SimpleMatrix sm = null;
+            Iterator<CoreMap> sentenceIterator = sentences.iterator();
+            for(int i=0; i<length; i++) {
+                CoreMap sentence = sentenceIterator.next();
+                tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
+                sm = RNNCoreAnnotations.getPredictions(tree);
+                for(int j=0; j<5; j++) {
+                    sentiments[i][j] = Math.round(sm.get(j) * 100d);
+                }
+            }
+            return sentiments;
+        }
+
         public static String formatNameForQuery(String name) { //method for formatting names into query form eg "university    of washington" => "university%20of%20washington"
             String clean = name.trim().replaceAll(" +", " "); //remove all trailing/leading w.s. + any extra in middle
             if(clean.contains(" ")) {
@@ -83,8 +111,9 @@ public class App {
         }
         public static void main(String[] args) throws IOException {
 //            System.out.println(App.getUniversityID("university of san francisco"));
-            System.out.println(App.getProfessorId("1600", "karen bouwer"));
+//            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
 //            System.out.println(getProfessorReviews("517854"));
+            System.out.println(Arrays.deepToString(getSentiment("I took the Season in the Congo freshman seminar and it was an amazing class. The perspective you have walking into the class at the beginning of the year is nothing like the one you have walking out. Karen introduces you to a new way of thinking and provides you with a new way to see the Congo and Africa as a whole.")));
         }
 }
