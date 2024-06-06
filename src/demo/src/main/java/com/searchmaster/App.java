@@ -65,9 +65,8 @@ public class App {
             for(Element review : reviewList) {
                 if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
                     reviews.add(review.select("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)").text());
-                } else {
-                    continue;
                 }
+                continue;
             }
             return reviews;
         }
