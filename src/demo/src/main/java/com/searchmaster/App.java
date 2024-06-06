@@ -11,7 +11,6 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 
 
 public class App {
@@ -36,9 +35,7 @@ public class App {
         public static String getProfessorId(String universityID, String name) throws IOException {
             String clean = formatNameForQuery(name); //clean the name
             String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean; //format url
-            FirefoxOptions options = new FirefoxOptions ();
-            options.addArguments("--headless");
-            WebDriver driver = new FirefoxDriver (options);//emulates browser w/ selenium
+            WebDriver driver = new FirefoxDriver(); //emulates browser w/ selenium
             driver.get(query); //go to the query site
             Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
             driver.manage().addCookie(cookie2);
@@ -60,20 +57,18 @@ public class App {
             return Objects.requireNonNull(pageElements.first()).text();
         }
 
-        public static void getProfessorReviews(String professorID) throws IOException {
+        public static ArrayList<String> getProfessorReviews(String professorID) throws IOException {
             String query = "https://www.ratemyprofessors.com/professor/" + professorID;
             Document page = Jsoup.connect(query).get();
             Elements reviewList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
-            int count = 1;
+            ArrayList<String> reviews = new ArrayList<>();
             for(Element review : reviewList) {
                 if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
-                    System.out.println("Review number " + count + ": " + review.select("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)").text());
-                } else {
-                    System.out.println("ad");
-                    continue;
+                    reviews.add(review.select("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)").text());
                 }
-                count++;
+                continue;
             }
+            return reviews;
         }
 
         public static String formatNameForQuery(String name) { //method for formatting names into query form eg "university    of washington" => "university%20of%20washington"
@@ -85,8 +80,8 @@ public class App {
         }
         public static void main(String[] args) throws IOException {
 //            System.out.println(App.getUniversityID("university of san francisco"));
-            System.out.println(App.getProfessorId("1600", "karen bouwer"));
+//            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
-//            getProfessorReviews("517854");
+            System.out.println(getProfessorReviews("517854"));
         }
 }
