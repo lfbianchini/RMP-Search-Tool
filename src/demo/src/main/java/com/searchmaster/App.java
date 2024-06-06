@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 
 public class App {
@@ -35,7 +36,9 @@ public class App {
         public static String getProfessorId(String universityID, String name) throws IOException {
             String clean = formatNameForQuery(name); //clean the name
             String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean; //format url
-            WebDriver driver = new FirefoxDriver(); //emulates browser w/ selenium
+            FirefoxOptions options = new FirefoxOptions ();
+            options.addArguments("--headless");
+            WebDriver driver = new FirefoxDriver (options);//emulates browser w/ selenium
             driver.get(query); //go to the query site
             Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
             driver.manage().addCookie(cookie2);
@@ -82,8 +85,8 @@ public class App {
         }
         public static void main(String[] args) throws IOException {
 //            System.out.println(App.getUniversityID("university of san francisco"));
-//            System.out.println(App.getProfessorId("1600", "karen bouwer"));
+            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
-            getProfessorReviews("517854");
+//            getProfessorReviews("517854");
         }
 }
