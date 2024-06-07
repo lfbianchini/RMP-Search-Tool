@@ -102,18 +102,138 @@ public class App {
             return sentiments;
         }
 
-        public static String formatNameForQuery(String name) { //method for formatting names into query form eg "university    of washington" => "university%20of%20washington"
-            String clean = name.trim().replaceAll(" +", " "); //remove all trailing/leading w.s. + any extra in middle
-            if(clean.contains(" ")) {
-                clean = clean.replace(" ", "%20");
+    public static ArrayList<String> getMetadata(String professorID) throws IOException {
+        String query = "https://www.ratemyprofessors.com/professor/" + professorID;
+        Document page = Jsoup.connect(query).get();
+        Elements classList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
+        ArrayList<String> metadata = new ArrayList<>();
+        for (Element c : classList) {
+            if(!Objects.requireNonNull(c.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
+                Elements courseMeta = page.selectFirst(".CourseMeta__StyledCourseMeta-x344ms-0.fPJDHT").children();
+                for (Element meta : courseMeta) {
+                    metadata.add(meta.text());
+                }
             }
-            return clean;
+            continue;
         }
-        public static void main(String[] args) throws IOException {
+        return metadata;
+    }
+
+    public static ArrayList<String> getGrades(ArrayList<String> metadata) {
+        ArrayList<String> grades = new ArrayList<>();
+        for (String meta: metadata) {
+            if (meta.contains("Grade")) {
+                grades.add(meta.substring(7));
+            }
+        }
+        return grades;
+    }
+
+    public static String averageGrade(ArrayList<String> grades) {
+        ArrayList<String> filteredGrades = new ArrayList<>();
+        for (String grade : grades) {
+            if (!(grades.contains("Not sure yet"))) {
+                filteredGrades.add(grade);
+            }
+        }
+        double avgWeight = 0;
+        for (String grade: filteredGrades) {
+            switch (grade) {
+                case "A+":
+                case "A":
+                    avgWeight += 4;
+                    break;
+                case "A-":
+                    avgWeight += 3.7;
+                    break;
+                case "B+":
+                    avgWeight += 3.3;
+                    break;
+                case "B":
+                    avgWeight += 3;
+                    break;
+                case "B-":
+                    avgWeight += 2.7;
+                    break;
+                case "C+":
+                    avgWeight += 2.3;
+                    break;
+                case "C":
+                    avgWeight += 2.0;
+                    break;
+                case "C-":
+                    avgWeight += 1.7;
+                    break;
+                case "D+":
+                    avgWeight += 1.3;
+                    break;
+                case "D":
+                    avgWeight += 1.0;
+                    break;
+                case "D-":
+                    avgWeight += 0.7;
+                    break;
+                case "F":
+                    avgWeight += 0.0;
+                    break;
+            }
+        }
+        avgWeight = avgWeight / filteredGrades.size();
+        String avgWeightLetter = "";
+        if (avgWeight >= 3.85 && avgWeight <= 4.0) {
+            avgWeightLetter = "A";
+        } else if (avgWeight >= 3.50 && avgWeight < 3.85) {
+            avgWeightLetter = "A-";
+        } else if (avgWeight >= 3.15 && avgWeight < 3.50) {
+            avgWeightLetter = "B+";
+        } else if (avgWeight >= 2.85 && avgWeight < 3.15) {
+            avgWeightLetter = "B";
+        } else if (avgWeight >= 2.50 && avgWeight < 2.85) {
+            avgWeightLetter = "B-";
+        } else if (avgWeight >= 2.15 && avgWeight < 2.50) {
+            avgWeightLetter = "C+";
+        } else if (avgWeight >= 1.85 && avgWeight < 2.15) {
+            avgWeightLetter = "C";
+        } else if (avgWeight >= 1.50 && avgWeight < 1.85) {
+            avgWeightLetter = "C-";
+        } else if (avgWeight >= 1.15 && avgWeight < 1.50) {
+            avgWeightLetter = "D+";
+        } else if (avgWeight >= 0.85 && avgWeight < 1.15) {
+            avgWeightLetter = "D";
+        } else if (avgWeight >= 0.70 && avgWeight < 0.85) {
+            avgWeightLetter = "D-";
+        } else if (avgWeight >= 0.0 && avgWeight < 0.70) {
+            avgWeightLetter = "F";
+        }
+
+        return avgWeightLetter + ": " + String.valueOf(avgWeight);
+    }
+
+    public static String averageProfGrade(String professorID) throws IOException {
+        return averageGrade(getGrades(getMetadata("517854")));
+    }
+
+    public static String formatNameForQuery(String name) { //method for formatting names into query form eg "university    of washington" => "university%20of%20washington"
+        String clean = name.trim().replaceAll(" +", " "); //remove all trailing/leading w.s. + any extra in middle
+        if(clean.contains(" ")) {
+            clean = clean.replace(" ", "%20");
+        }
+        return clean;
+    }
+
+    public static void main(String[] args) throws IOException {
 //            System.out.println(App.getUniversityID("university of san francisco"));
 //            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
-//            System.out.println(getProfessorReviews("517854"));
-            System.out.println(Arrays.deepToString(getSentiment("I took the Season in the Congo freshman seminar and it was an amazing class. The perspective you have walking into the class at the beginning of the year is nothing like the one you have walking out. Karen introduces you to a new way of thinking and provides you with a new way to see the Congo and Africa as a whole.")));
-        }
+//            System.out.println(getProfessorReviews("2231495"));
+        System.out.println(Arrays.toString(getMetadata("517854").toArray()));
+        System.out.println(Arrays.toString(getGrades(getMetadata("517854")).toArray()));
+        ArrayList<String> grades = new ArrayList<>(Arrays.asList(
+            "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
+            "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
+            "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
+        ));
+        System.out.println(averageGrade(grades));
+        System.out.println(averageProfGrade("517854"));
+    }
 }
