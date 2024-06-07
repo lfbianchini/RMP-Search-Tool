@@ -221,7 +221,7 @@ public class App {
 //            System.out.println(App.getUniversityID("university of san francisco"));
 //            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
-            System.out.println(getProfessorReviews("258649"));
+            System.out.println(getProfessorReviews("483530"));
 //            System.out.println(Arrays.toString(getMetadata("517854").toArray()));
 //            System.out.println(Arrays.toString(getGrades(getMetadata("517854")).toArray()));
 //            ArrayList<String> grades = new ArrayList<>(Arrays.asList(
@@ -230,6 +230,6 @@ public class App {
 //                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
 //            ));
 //            System.out.println(averageGrade(grades));
-              System.out.println(averageProfGrade("517854"));
+              System.out.println(averageProfGrade("483530"));
         }
 }
