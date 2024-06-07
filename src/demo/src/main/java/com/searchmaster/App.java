@@ -75,42 +75,33 @@ public class App {
             return reviews;
         }
 
-        public static ArrayList<String> getMetadata(String professorID) throws IOException {
+        public static ArrayList<Element> getMetadata(String professorID) throws IOException {
             String query = "https://www.ratemyprofessors.com/professor/" + professorID;
             Document page = Jsoup.connect(query).get();
             Elements classList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
-            ArrayList<String> metadata = new ArrayList<>();
-            for (Element c : classList) {
-                if(!Objects.requireNonNull(c.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
-                    Elements courseMeta = page.selectFirst(".CourseMeta__StyledCourseMeta-x344ms-0.fPJDHT").children();
-                    for (Element meta : courseMeta) {
-                        metadata.add(meta.text());
-                    }
+            ArrayList<Element> metadata = new ArrayList<>();
+            for(Element classElement : classList) {
+                if(!Objects.requireNonNull(classElement.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
+                    Elements reviewMeta = Objects.requireNonNull(classElement.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children();
+                    metadata.addAll(reviewMeta);
                 }
-                continue;
             }
             return metadata;
         }
 
-        public static ArrayList<String> getGrades(ArrayList<String> metadata) {
+        public static ArrayList<String> getGrades(ArrayList<Element> metadata) {
             ArrayList<String> grades = new ArrayList<>();
-            for (String meta: metadata) {
-                if (meta.contains("Grade")) {
-                    grades.add(meta.substring(7));
+            for (Element meta: metadata) {
+                if(meta.text().contains("Grade: ") && !meta.text().contains("Not sure yet")) {
+                    grades.add(meta.text().substring(7));
                 }
             }
             return grades;
         }
 
         public static String averageGrade(ArrayList<String> grades) {
-            ArrayList<String> filteredGrades = new ArrayList<>();
-            for (String grade : grades) {
-                if (!(grades.contains("Not sure yet"))) {
-                    filteredGrades.add(grade);
-                }
-            }
             double avgWeight = 0;
-            for (String grade: filteredGrades) {
+            for (String grade: grades) {
                 switch (grade) {
                     case "A+":
                     case "A":
@@ -151,7 +142,7 @@ public class App {
                         break;
                 }
             }
-            avgWeight = avgWeight / filteredGrades.size();
+            avgWeight = avgWeight / grades.size();
             String avgWeightLetter = "";
             if (avgWeight >= 3.85 && avgWeight <= 4.0) {
                 avgWeightLetter = "A";
@@ -183,7 +174,7 @@ public class App {
         }
 
         public static String averageProfGrade(String professorID) throws IOException {
-            return averageGrade(getGrades(getMetadata("517854")));
+            return averageGrade(getGrades(getMetadata(professorID)));
         }
 
         public static String formatNameForQuery(String name) { //method for formatting names into query form eg "university    of washington" => "university%20of%20washington"
@@ -199,14 +190,14 @@ public class App {
 //            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
 //            System.out.println(getProfessorReviews("2231495"));
-              System.out.println(Arrays.toString(getMetadata("517854").toArray()));
+//              System.out.println(Arrays.toString(getMetadata("517854").toArray()));
               System.out.println(Arrays.toString(getGrades(getMetadata("517854")).toArray()));
-              ArrayList<String> grades = new ArrayList<>(Arrays.asList(
-                  "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
-                  "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
-                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
-              ));
-              System.out.println(averageGrade(grades));
+//              ArrayList<String> grades = new ArrayList<>(Arrays.asList(
+//                  "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
+//                  "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
+//                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
+//              ));
+//              System.out.println(averageGrade(grades));
               System.out.println(averageProfGrade("517854"));
         }
 }
