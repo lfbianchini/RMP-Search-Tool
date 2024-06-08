@@ -107,8 +107,8 @@ public class App {
         }
 
         public static ArrayList<Element> getMetadata(String professorID) throws IOException {
+            Document page = Jsoup.parse(loadReviews(professorID).getPageSource());
             String query = "https://www.ratemyprofessors.com/professor/" + professorID;
-            Document page = Jsoup.connect(query).get();
             Elements classList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
             ArrayList<Element> metadata = new ArrayList<>();
             for(Element classElement : classList) {
