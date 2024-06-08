@@ -17,12 +17,17 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 
 
 public class App {
     static WebDriver driver = new FirefoxDriver();
+    static StanfordCoreNLP pipeline;
+    static {
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize, pos, parse, ssplit, sentiment");
+        pipeline = new StanfordCoreNLP(props);
+    }
 
     public static void initializeDriver(String professorID) {
 //        makeHeadless();
@@ -109,22 +114,31 @@ public class App {
         }
         return reviews;
     }
-
-    public static long[][] getAverageSentiment(String professorID) throws IOException {
+    //returns professors overall sentiment values ex: [25,25,25,26,24]
+    public static long[] getAverageProfSentiments(String professorID) throws IOException {
         ArrayList<String> professorReviews = getProfessorReviews(professorID);
+        long[] avgArr = new long[5];
+        long[] sentimentArr;
+        int count = 1;
         for(String review : professorReviews) {
-            getSentiment(review);
+            sentimentArr = getSentiments(review);
+            for(int i=0; i<avgArr.length; i++) {
+                avgArr[i] += sentimentArr[i];
+            }
+            System.out.println("review " + count + " done");
+            count++;
         }
+        return Arrays.stream(avgArr)
+            .map(value -> value/professorReviews.size())
+            .toArray();
     }
 
-    public static long[][] getSentiment(String paragraph) {
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    public static long[] getSentiments(String paragraph) {
         Annotation document = pipeline.process(paragraph);
         Collection<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
         int length = sentences.size();
         long[][] sentiments = new long[length][5];
+        long[] avgSentiments = new long[5];
         Tree tree = null;
         SimpleMatrix sm = null;
         Iterator<CoreMap> sentenceIterator = sentences.iterator();
@@ -134,9 +148,12 @@ public class App {
             sm = RNNCoreAnnotations.getPredictions(tree);
             for(int j=0; j<5; j++) {
                 sentiments[i][j] = Math.round(sm.get(j) * 100d);
+                avgSentiments[j] += sentiments[i][j];
             }
         }
-        return sentiments;
+        return Arrays.stream(avgSentiments)
+            .map(value -> value/length)
+            .toArray();
     }
 
     public static ArrayList<Element> getMetadata(String professorID) throws IOException {
@@ -251,7 +268,7 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException {
-        initializeDriver("2231495");
+        initializeDriver("517854");
 //            System.out.println(App.getUniversityID("university of san francisco"));
 //            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
@@ -264,8 +281,10 @@ public class App {
 //                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
 //            ));
 //            System.out.println(averageGrade(grades));
-        System.out.println(averageProfGrade("2231495"));
-        System.out.println(getProfessorReviews("2231495"));
-//        System.out.println(Arrays.deepToString(getSentiment("hello there")));
+//        System.out.println(averageProfGrade("2231495"));
+        long startTime = System.currentTimeMillis();
+        System.out.println(Arrays.toString(getAverageProfSentiments("517854")));
+        long endTime = System.currentTimeMillis();
+        System.out.println("it took " + (endTime - startTime) + "ms");
     }
 }
