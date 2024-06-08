@@ -14,13 +14,42 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 
 public class App {
+
+    public static WebDriver loadReviews(String professorID) {
+
+        FirefoxOptions options = new FirefoxOptions();
+
+        // Initialize WebDriver
+        options.addArguments("--headless");
+        WebDriver driver = new FirefoxDriver(options);
+
+        driver.get("https://www.ratemyprofessors.com/professor/" + professorID); // replace with the actual
+        Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
+        driver.manage().addCookie(cookie2);
+        driver.get("https://www.ratemyprofessors.com/professor/" + professorID);
+
+        // Locator for the button
+        By buttonLocator = By.cssSelector(".Buttons__Button-sc-19xdot-1"); // replace with the actual locator (e.g., id, class, xpath)
+        // Loop to click the button until it is no longer present
+        while (true) {
+            try {
+                // Find the button
+                WebElement button = driver.findElement(buttonLocator);
+                button.click();
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                break;
+            } catch (ElementClickInterceptedException e) {
+                continue;
+            }
+        }
+        return driver;
+    }
         //input university name and return its ID
         //uses jsoup to find the university id, doesn't need selenium because page has no loading phase/popup
         public static String getUniversityID(String name) throws IOException {
@@ -67,8 +96,8 @@ public class App {
         }
 
         public static ArrayList<String> getProfessorReviews(String professorID) throws IOException {
+            Document page = Jsoup.parse(loadReviews(professorID).getPageSource());
             String query = "https://www.ratemyprofessors.com/professor/" + professorID;
-            Document page = Jsoup.connect(query).get();
             Elements reviewList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
             ArrayList<String> reviews = new ArrayList<>();
             for(Element review : reviewList) {
@@ -103,8 +132,8 @@ public class App {
         }
 
     public static ArrayList<String> getMetadata(String professorID) throws IOException {
+        Document page = Jsoup.parse(loadReviews(professorID).getPageSource());
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
-        Document page = Jsoup.connect(query).get();
         Elements classList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
         ArrayList<String> metadata = new ArrayList<>();
         for (Element c : classList) {
@@ -225,15 +254,15 @@ public class App {
 //            System.out.println(App.getUniversityID("university of san francisco"));
 //            System.out.println(App.getProfessorId("1600", "karen bouwer"));
 //            System.out.println(getProfessorRating("517854"));
-//            System.out.println(getProfessorReviews("2231495"));
-        System.out.println(Arrays.toString(getMetadata("517854").toArray()));
-        System.out.println(Arrays.toString(getGrades(getMetadata("517854")).toArray()));
-        ArrayList<String> grades = new ArrayList<>(Arrays.asList(
-            "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
-            "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
-            "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
-        ));
-        System.out.println(averageGrade(grades));
-        System.out.println(averageProfGrade("517854"));
+        System.out.println(getProfessorReviews("483530"));
+//            System.out.println(Arrays.toString(getMetadata("517854").toArray()));
+//            System.out.println(Arrays.toString(getGrades(getMetadata("517854")).toArray()));
+//            ArrayList<String> grades = new ArrayList<>(Arrays.asList(
+//                  "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
+//                  "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
+//                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
+//            ));
+//            System.out.println(averageGrade(grades));
+        System.out.println(averageProfGrade("483530"));
     }
 }
