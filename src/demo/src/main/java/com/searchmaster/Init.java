@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public class Init {
     public static void main(String[] args) throws IOException {
-        /* App.initializeDriver("517854");
-        System.out.println(App.getProfessorId("1600", "karen bouwer"));
+        App.initializeDriver("517854");
+        /*System.out.println(App.getProfessorId("1600", "karen bouwer"));
         System.out.println(App.getProfessorRating("517854"));
         System.out.println(App.getProfessorReviews("256109"));
         System.out.println(Arrays.toString(App.getMetadata("517854").toArray()));
