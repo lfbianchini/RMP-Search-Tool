@@ -52,7 +52,7 @@ class SplashScreen {
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
         JLabel textLabel = new JLabel("");
-        textLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        textLabel.setFont(new Font("Arial", Font.BOLD, 40));
         textLabel.setForeground(Color.BLACK);
 
         // Loading animation
@@ -96,7 +96,7 @@ class SplashScreen {
         // Timer for text typing effect
         Timer finalTypingTimer = typingTimer;
         typingTimer = new Timer(40, new ActionListener() {
-            String[] texts = {"R", "RM", "RMP", "RMP ", "RMP A", "RMP AN", "RMP ANA", "RMP ANAL", "RMP ANAL ", "RMP ANAL T", "RMP ANAL TOO", "RMP ANAL TOOL"};
+            String[] texts = {"R", "RM", "RMP", "RMP ", "RMP A", "RMP AN", "RMP ANA", "RMP ANAL", "RMP ANALY", "RMP ANALYS", "RMP ANALYSIS", "RMP ANALYSIS ", "RMP ANALYSIS T", "RMP ANALYSIS TO", "RMP ANALYSIS TOO", "RMP ANALYSIS TOOL"};
             int index = 0;
 
             @Override
@@ -167,14 +167,10 @@ class MainAppWindow {
     private JFrame frame;
 
     public MainAppWindow() {
-        frame = new JFrame("RMP Anal Tool");
+        frame = new JFrame("SMV1.0 ALPHA");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
-        TextComponent h = new TextArea();
-        h.setText("Welcome to the RMP Anal Suite");
-        frame.add(h);
-
     }
 
     public void showMainAppWindow() {
