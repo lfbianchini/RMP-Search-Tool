@@ -266,25 +266,4 @@ public class App {
         }
         return clean;
     }
-
-    public static void main(String[] args) throws IOException {
-        initializeDriver("517854");
-//            System.out.println(App.getUniversityID("university of san francisco"));
-//            System.out.println(App.getProfessorId("1600", "karen bouwer"));
-//            System.out.println(getProfessorRating("517854"));
-//        System.out.println(getProfessorReviews("256109"));
-//            System.out.println(Arrays.toString(getMetadata("517854").toArray()));
-//            System.out.println(Arrays.toString(getGrades(getMetadata("256109")).toArray()));
-//            ArrayList<String> grades = new ArrayList<>(Arrays.asList(
-//                  "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
-//                  "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
-//                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
-//            ));
-//            System.out.println(averageGrade(grades));
-//        System.out.println(averageProfGrade("2231495"));
-        long startTime = System.currentTimeMillis();
-        System.out.println(Arrays.toString(getAverageProfSentiments("517854")));
-        long endTime = System.currentTimeMillis();
-        System.out.println("it took " + (endTime - startTime) + "ms");
-    }
 }
