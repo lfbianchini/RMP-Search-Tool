@@ -1,4 +1,4 @@
-package com.searchmaster;
+package org.searchmasterV2;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public class GUI extends JFrame {
+public class LoadingScreen extends JFrame {
 
-    public static void main(String[] args) {
+    public static void Load() {
         // Create the splash screen
         SplashScreen splash = new SplashScreen();
         splash.showSplashScreen();
@@ -22,8 +22,6 @@ public class GUI extends JFrame {
 
         // Close the splash screen and open the main application window
         splash.closeSplashScreen();
-        MainAppWindow mainApp = new MainAppWindow();
-        mainApp.showMainAppWindow();
     }
 }
 
