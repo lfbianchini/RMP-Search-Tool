@@ -1,8 +1,7 @@
-package com.searchmaster;
+package org.searchmasterV2;
 
 import java.io.IOException;
 import java.util.*;
-
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.*;
@@ -14,21 +13,41 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.*;
+
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.interactions.Actions;
 
 
-public class App {
+public class Functionality {
+    static WebDriver driver = new FirefoxDriver();
+    static StanfordCoreNLP pipeline;
+    static {
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize, pos, parse, ssplit, sentiment");
+        pipeline = new StanfordCoreNLP(props);
+    }
 
-    public static WebDriver loadReviews(String professorID) {
+    public static void initializeDriver(String professorID) {
+//        makeHeadless();
+        loadEntirePage(driver, professorID);
+    }
 
+//    public static void makeHeadless() {
+//        FirefoxOptions options = new FirefoxOptions();
+//        options.addArguments("--headless");
+//        driver = new FirefoxDriver(options);
+//    }
+
+    public static void loadEntirePage(WebDriver driver, String professorID) {
         FirefoxOptions options = new FirefoxOptions();
-
-        // Initialize WebDriver
         options.addArguments("--headless");
-        WebDriver driver = new FirefoxDriver(options);
-
         driver.get("https://www.ratemyprofessors.com/professor/" + professorID); // replace with the actual
         Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
         driver.manage().addCookie(cookie2);
@@ -40,42 +59,33 @@ public class App {
         while (true) {
             try {
                 // Find the button
+                Actions actions = new Actions(driver);
+                actions.scrollByAmount(0, 4000);
                 WebElement button = driver.findElement(buttonLocator);
                 button.click();
             } catch (org.openqa.selenium.NoSuchElementException e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
                 break;
             } catch (ElementClickInterceptedException e) {
+                Actions actions = new Actions(driver);
+                WebElement button;
+                try {
+                    button = driver.findElement(new By.ByCssSelector("#IL_SR_X1 > svg:nth-child(1) > g:nth-child(1) > path:nth-child(4)"));
+                } catch (org.openqa.selenium.NoSuchElementException e1) {
+                    button = driver.findElement(new By.ByCssSelector("#IL_SR_X2 > svg:nth-child(1) > g:nth-child(1) > path:nth-child(4)"));
+                }
+                button.click();
                 continue;
             } catch(StaleElementReferenceException e) {
-                return driver;
+                System.out.println(Arrays.toString(e.getStackTrace()));
+                return;
             }
         }
-        return driver;
-    }
-    //input university name and return its ID
-    //uses jsoup to find the university id, doesn't need selenium because page has no loading phase/popup
-    public static String getUniversityID(String name) throws IOException {
-        String clean = formatNameForQuery(name);
-        String query = "https://www.ratemyprofessors.com/search/schools?q=" + clean; //format url
-
-        Document page = Jsoup.connect(query).timeout(3000).userAgent("Mozilla/126.0").get(); //mozilla agent to connect to the page
-        Elements pageElements = page.select("a.SchoolCard__StyledSchoolCard-sc-130cnkk-0:nth-child(1)");
-
-        String id = pageElements.get(0).attributes().get("href"); //gets the id
-        return id.substring(8);
-
     }
 
-
-    //input university id and the name of the professor, return's the professor's ID
-    //uses selenium to wait for page to load and hit escape when the modal pops up
-    //then uses jsoup to extract the professor's id from the html
     public static String getProfessorId(String universityID, String name) throws IOException {
         String clean = formatNameForQuery(name); //clean the name
         String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean; //format url
-        FirefoxOptions options = new FirefoxOptions ();
-        options.addArguments("--headless");
-        WebDriver driver = new FirefoxDriver (options);//emulates browser w/ selenium
         driver.get(query); //go to the query site
         Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
         driver.manage().addCookie(cookie2);
@@ -83,7 +93,6 @@ public class App {
         driver.manage().window().minimize();
 
         Document page = Jsoup.parse(driver.getPageSource()); //hand selenium driver's source back to jsoup
-        driver.close();
         Elements pageElements = page.select("a.TeacherCard__StyledTeacherCard-syjs0d-0:nth-child(1)");
         // ^ query the html element containing the href for the first professor shown on the page
         String id = pageElements.get(0).attributes().get("href"); //get the ID from the href
@@ -98,9 +107,7 @@ public class App {
     }
 
     public static ArrayList<String> getProfessorReviews(String professorID) throws IOException {
-        WebDriver driver = loadReviews(professorID);
         Document page = Jsoup.parse(driver.getPageSource());
-        driver.close();
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
         Elements reviewList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
         ArrayList<String> reviews = new ArrayList<>();
@@ -112,15 +119,31 @@ public class App {
         }
         return reviews;
     }
+    //returns professors overall sentiment values ex: [25,25,25,26,24]
+    public static long[] getAverageProfSentiments(String professorID) throws IOException {
+        ArrayList<String> professorReviews = getProfessorReviews(professorID);
+        long[] avgArr = new long[5];
+        long[] sentimentArr;
+        int count = 1;
+        for(String review : professorReviews) {
+            sentimentArr = getSentiments(review);
+            for(int i=0; i<avgArr.length; i++) {
+                avgArr[i] += sentimentArr[i];
+            }
+            System.out.println("review " + count + " done");
+            count++;
+        }
+        return Arrays.stream(avgArr)
+            .map(value -> value/professorReviews.size())
+            .toArray();
+    }
 
-    public static long[][] getSentiment(String paragraph) {
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    public static long[] getSentiments(String paragraph) {
         Annotation document = pipeline.process(paragraph);
         Collection<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
         int length = sentences.size();
         long[][] sentiments = new long[length][5];
+        long[] avgSentiments = new long[5];
         Tree tree = null;
         SimpleMatrix sm = null;
         Iterator<CoreMap> sentenceIterator = sentences.iterator();
@@ -130,15 +153,16 @@ public class App {
             sm = RNNCoreAnnotations.getPredictions(tree);
             for(int j=0; j<5; j++) {
                 sentiments[i][j] = Math.round(sm.get(j) * 100d);
+                avgSentiments[j] += sentiments[i][j];
             }
         }
-        return sentiments;
+        return Arrays.stream(avgSentiments)
+            .map(value -> value/length)
+            .toArray();
     }
 
     public static ArrayList<Element> getMetadata(String professorID) throws IOException {
-        WebDriver driver = loadReviews(professorID);
         Document page = Jsoup.parse(driver.getPageSource());
-        driver.close();
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
         Elements classList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
         ArrayList<Element> metadata = new ArrayList<>();
@@ -246,22 +270,5 @@ public class App {
             clean = clean.replace(" ", "%20");
         }
         return clean;
-    }
-
-    public static void main(String[] args) throws IOException {
-//            System.out.println(App.getUniversityID("university of san francisco"));
-//            System.out.println(App.getProfessorId("1600", "karen bouwer"));
-//            System.out.println(getProfessorRating("517854"));
-//        System.out.println(getProfessorReviews("256109"));
-//            System.out.println(Arrays.toString(getMetadata("517854").toArray()));
-//            System.out.println(Arrays.toString(getGrades(getMetadata("256109")).toArray()));
-//            ArrayList<String> grades = new ArrayList<>(Arrays.asList(
-//                  "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
-//                  "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
-//                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
-//            ));
-//            System.out.println(averageGrade(grades));
-        System.out.println(averageProfGrade("256109"));
-//        System.out.println(Arrays.deepToString(getSentiment("hello there")));
     }
 }

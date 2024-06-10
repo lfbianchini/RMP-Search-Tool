@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
+         <children>
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the university name that the professor you have in mind teaches at?" wrappingWidth="261.376953125" />
+            <TextField layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Purdue&quot;" />
+            <Button fx:id="universityNameButton" layoutX="169.0" layoutY="48.0" mnemonicParsing="false" style="-fx-background-color: #D4D4D4;" text="Submit" />
+            <MenuButton fx:id="universityDropdown" layoutX="120.0" layoutY="89.0" mnemonicParsing="false" style="-fx-background-color: #D4D4D4;" text="University List">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here are the first three results from your search, please pick one:" wrappingWidth="99.0" />
+            <Pane layoutX="3.0" opacity="0.24" prefHeight="228.0" prefWidth="7.0" style="-fx-background-color: black;" />
+         </children>
+      </AnchorPane>
+      <Pane prefHeight="270.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;" />
+      <Pane layoutX="48.0" prefHeight="48.0" prefWidth="301.0" style="-fx-background-color: #D4D4D4;">
+         <children>
+            <Text layoutX="-43.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SearchMaster" wrappingWidth="301.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Pane layoutX="6.0" layoutY="45.0" opacity="0.15" prefHeight="3.0" prefWidth="295.0" style="-fx-background-color: black;" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
