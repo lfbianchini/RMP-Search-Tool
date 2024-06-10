@@ -1,8 +1,7 @@
-package com.searchmaster;
+package org.searchmasterV2;
 
 import java.io.IOException;
 import java.util.*;
-
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.*;
@@ -14,13 +13,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.*;
+
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
 
-public class App {
+public class Functionality {
     static WebDriver driver = new FirefoxDriver();
     static StanfordCoreNLP pipeline;
     static {
@@ -265,26 +270,5 @@ public class App {
             clean = clean.replace(" ", "%20");
         }
         return clean;
-    }
-
-    public static void main(String[] args) throws IOException {
-        initializeDriver("517854");
-//            System.out.println(App.getUniversityID("university of san francisco"));
-//            System.out.println(App.getProfessorId("1600", "karen bouwer"));
-//            System.out.println(getProfessorRating("517854"));
-//        System.out.println(getProfessorReviews("256109"));
-//            System.out.println(Arrays.toString(getMetadata("517854").toArray()));
-//            System.out.println(Arrays.toString(getGrades(getMetadata("256109")).toArray()));
-//            ArrayList<String> grades = new ArrayList<>(Arrays.asList(
-//                  "A+", "A", "A-", "C", "C+", "B-", "D", "D+", "F", "B",
-//                  "B+", "A-", "A+", "A+", "B+", "A+", "A", "A+", "B+", "B",
-//                  "D", "D-", "A+", "A+", "C-", "B-", "B-", "A-", "A+", "C+"
-//            ));
-//            System.out.println(averageGrade(grades));
-//        System.out.println(averageProfGrade("2231495"));
-        long startTime = System.currentTimeMillis();
-        System.out.println(Arrays.toString(getAverageProfSentiments("517854")));
-        long endTime = System.currentTimeMillis();
-        System.out.println("it took " + (endTime - startTime) + "ms");
     }
 }
