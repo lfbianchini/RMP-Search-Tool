@@ -26,24 +26,21 @@ import org.openqa.selenium.interactions.Actions;
 
 
 public class Functionality {
-    static WebDriver driver = new FirefoxDriver();
+    static WebDriver driver;
     static StanfordCoreNLP pipeline;
     static {
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("--headless");
+        driver = new FirefoxDriver(options);
+
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, pos, parse, ssplit, sentiment");
         pipeline = new StanfordCoreNLP(props);
     }
 
     public static void initializeDriver(String professorID) {
-//        makeHeadless();
         loadEntirePage(driver, professorID);
     }
-
-//    public static void makeHeadless() {
-//        FirefoxOptions options = new FirefoxOptions();
-//        options.addArguments("--headless");
-//        driver = new FirefoxDriver(options);
-//    }
 
     public static void loadEntirePage(WebDriver driver, String professorID) {
         FirefoxOptions options = new FirefoxOptions();
@@ -81,6 +78,20 @@ public class Functionality {
                 return;
             }
         }
+    }
+
+    public static HashMap<String, String> getUniversityID(String name) throws IOException {
+        String clean = formatNameForQuery(name);
+        String query = "https://www.ratemyprofessors.com/search/schools?q=" + clean; //format url
+        HashMap<String, String> map = new HashMap<>();
+        Document page = Jsoup.connect(query).timeout(3000).userAgent("Mozilla/126.0").get(); //mozilla agent to connect to the page
+        for(int i=1; i<4; i++) {
+            Elements pageElements = page.select("a.SchoolCard__StyledSchoolCard-sc-130cnkk-0:nth-child(" + i + ")");
+            String id = pageElements.get(0).attributes().get("href").substring(8);
+            String uniName = Objects.requireNonNull(Objects.requireNonNull(pageElements.first()).selectFirst("div:nth-child(2) > div:nth-child(1)")).text();
+            map.put(uniName, id);
+        }
+        return map;
     }
 
     public static String getProfessorId(String universityID, String name) throws IOException {
