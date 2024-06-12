@@ -94,7 +94,7 @@ public class Functionality {
         return map;
     }
 
-    public static String getProfessorId(String universityID, String name) throws IOException {
+    public static HashMap<String, String> getProfessorId(String universityID, String name) throws IOException {
         String clean = formatNameForQuery(name); //clean the name
         String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean; //format url
         driver.get(query); //go to the query site
@@ -103,11 +103,15 @@ public class Functionality {
         driver.get(query);
         driver.manage().window().minimize();
 
+        HashMap<String, String> map = new HashMap<>();
         Document page = Jsoup.parse(driver.getPageSource()); //hand selenium driver's source back to jsoup
-        Elements pageElements = page.select("a.TeacherCard__StyledTeacherCard-syjs0d-0:nth-child(1)");
-        // ^ query the html element containing the href for the first professor shown on the page
-        String id = pageElements.get(0).attributes().get("href"); //get the ID from the href
-        return id.substring(11);
+        for(int i=1; i<4; i++) {
+            Elements pageElements = page.select("a.TeacherCard__StyledTeacherCard-syjs0d-0:nth-child(" + i + ")");
+            String id = pageElements.get(0).attributes().get("href").substring(11);
+            String profName = Objects.requireNonNull(Objects.requireNonNull(pageElements.first()).selectFirst("div:nth-child(1) > div:nth-child(2) > div:nth-child(1)")).text();
+            map.put(profName, id);
+        }
+        return map;
     }
 
     public static String getProfessorRating(String professorID) throws IOException {

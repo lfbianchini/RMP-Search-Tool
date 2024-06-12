@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.UniversityPromptControllerPrimary">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.ProfessorPromptControllerPrimary">
    <children>
       <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
          <children>
-            <Text fx:id="help" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the university name that the professor you have in mind teaches at?" wrappingWidth="261.376953125" />
-            <TextField fx:id="universityTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Purdue&quot;" />
-            <Button fx:id="universityNameButton" layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onAction="#universityNameClicked" text="Submit" />
+            <Text fx:id="professorPromptText" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the name of the professor you have in mind?" wrappingWidth="261.376953125" />
+            <TextField fx:id="professorTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Jane Doe&quot;" />
+            <Button layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#professorNameSubmitClicked" text="Submit" />
             <Pane layoutX="3.0" opacity="0.24" prefHeight="228.0" prefWidth="7.0" style="-fx-background-color: black;" />
          </children>
       </AnchorPane>
       <Pane prefHeight="270.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
-            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="76.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#48494b" layoutX="27.0" layoutY="76.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
             <Pane layoutX="24.0" layoutY="101.0" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
             <Circle fill="#d4d4d4" layoutX="27.0" layoutY="160.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
          </children></Pane>

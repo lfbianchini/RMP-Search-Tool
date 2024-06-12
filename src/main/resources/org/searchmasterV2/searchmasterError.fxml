@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -12,12 +13,17 @@
          <children>
             <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the university name that the professor you have in mind teaches at?" wrappingWidth="261.376953125" />
             <TextField fx:id="universityTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Purdue&quot;" />
-            <Button fx:id="universitySubmitButton" layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onAction="#universityButtonErrorClicked" text="Submit" />
+            <Button fx:id="universitySubmitButton" layoutX="169.0" layoutY="48.0" mnemonicParsing="false" text="Submit" onAction="#universityNameClicked"/>
             <Pane layoutX="3.0" opacity="0.24" prefHeight="228.0" prefWidth="7.0" style="-fx-background-color: black;" />
             <Text fill="#e83333" layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="It looks like we couldn't find a university with that name. Please try again." underline="true" wrappingWidth="280.12109375" />
          </children>
       </AnchorPane>
-      <Pane prefHeight="270.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;" />
+      <Pane prefHeight="270.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
+         <children>
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="76.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="101.0" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="160.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+         </children></Pane>
       <Pane layoutX="48.0" prefHeight="48.0" prefWidth="301.0" style="-fx-background-color: #D4D4D4;">
          <children>
             <Text layoutX="-43.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SearchMaster" wrappingWidth="301.0">
