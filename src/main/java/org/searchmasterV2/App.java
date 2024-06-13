@@ -19,7 +19,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         App.stage = stage;
-        scene = new Scene(loadFXML("searchmaster"));
+        scene = new Scene(loadFXML("loading_screen"));
         stage.setScene(scene);
         stage.show();
         stage.setAlwaysOnTop(true);

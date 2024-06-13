@@ -51,11 +51,7 @@ public class UniversityPromptControllerPrimary {
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    try {
 
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
             });
             universityMenuButton.getItems().add(menuItem);
