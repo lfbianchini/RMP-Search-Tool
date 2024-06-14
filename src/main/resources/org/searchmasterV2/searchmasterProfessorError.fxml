@@ -13,7 +13,7 @@
          <children>
             <Text fx:id="professorPromptText" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the name of the professor you have in mind?" wrappingWidth="261.376953125" />
             <TextField fx:id="professorTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Jane Doe&quot;" />
-            <Button layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onAction="#universityNameClicked" text="Submit" />
+            <Button layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#professorNameSubmitClicked" text="Submit" />
             <Text fill="#e83333" layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="It looks like we couldn't find a professor with that name. Please try again." underline="true" wrappingWidth="287.0" />
             <Pane layoutX="3.0" opacity="0.24" prefHeight="228.0" prefWidth="7.0" style="-fx-background-color: black;" />
          </children>
