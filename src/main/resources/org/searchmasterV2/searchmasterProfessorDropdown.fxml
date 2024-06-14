@@ -13,7 +13,7 @@
          <children>
             <Text fx:id="professorPromptText" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the university name that the professor you have in mind teaches at?" wrappingWidth="261.376953125" />
             <TextField fx:id="professorTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Jane Doe&quot;" />
-            <Button layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onAction="#universityNameClicked" text="Submit" />
+            <Button layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#professorNameSubmitClicked" text="Submit" />
             <MenuButton fx:id="professorMenuButton" layoutX="120.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" text="Professor List">
               <items>
 
@@ -21,8 +21,6 @@
             </MenuButton>
             <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here are the first three results from your search, please pick one:" wrappingWidth="99.0" />
             <Pane layoutX="3.0" opacity="0.24" prefHeight="228.0" prefWidth="7.0" style="-fx-background-color: black;" />
-            <Button layoutX="182.0" layoutY="195.0" mnemonicParsing="false" onAction="#universityNameClicked" text="Next" />
-            <Text fx:id="universitySelectText" layoutX="14.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You selected: " />
          </children>
       </AnchorPane>
       <Pane prefHeight="270.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
