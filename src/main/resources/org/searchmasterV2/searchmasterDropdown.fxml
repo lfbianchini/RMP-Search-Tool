@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.UniversityPromptControllerPrimary">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.UniversityPromptControllerPrimary">
    <children>
       <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
          <children>
-            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the university name that the professor you have in mind teaches at?" wrappingWidth="261.376953125" />
-            <TextField fx:id="universityTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Purdue&quot;" />
-            <Button fx:id="universityNameButton" layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onAction="#universityNameClicked" text="Submit" />
-            <MenuButton fx:id="universityMenuButton" layoutX="120.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#universityMenuButtonClicked" text="University List">
+            <TextField fx:id="universityTextField" layoutX="92.0" layoutY="114.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Purdue&quot;" />
+            <Button fx:id="universityNameButton" layoutX="323.0" layoutY="114.0" mnemonicParsing="false" onAction="#universityNameClicked" prefHeight="38.0" prefWidth="69.0" text="Submit" />
+            <MenuButton fx:id="universityMenuButton" layoutX="180.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#universityMenuButtonClicked" prefHeight="38.0" prefWidth="113.0" text="University List">
               <items>
 
               </items>
             </MenuButton>
-            <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here are the first three results from your search, please pick one:" wrappingWidth="99.0" />
-            <Pane layoutX="3.0" opacity="0.24" prefHeight="228.0" prefWidth="7.0" style="-fx-background-color: black;" />
+            <Text layoutX="126.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="help" layoutX="92.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UNIVERSITY NAME" textAlignment="CENTER" wrappingWidth="300.0">
+               <font>
+                  <Font name="Microsoft JhengHei Light" size="12.0" />
+               </font>
+            </Text>
+            <Text layoutX="204.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS (3)" wrappingWidth="75.0">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="12.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
-      <Pane prefHeight="270.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
+      <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
             <Circle fill="#d4d4d4" layoutX="27.0" layoutY="160.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
             <Pane layoutX="24.0" layoutY="101.0" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
             <Circle fill="#d4d4d4" layoutX="27.0" layoutY="76.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
             <Arc fill="#48494b" layoutX="27.0" layoutY="74.0" length="180.0" radiusX="19.0" radiusY="19.0" startAngle="360.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
          </children></Pane>
-      <Pane layoutX="48.0" prefHeight="48.0" prefWidth="301.0" style="-fx-background-color: #D4D4D4;">
-         <children>
-            <Text layoutX="-43.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SearchMaster" wrappingWidth="301.0">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Pane layoutX="6.0" layoutY="45.0" opacity="0.15" prefHeight="3.0" prefWidth="295.0" style="-fx-background-color: black;" />
-         </children>
-      </Pane>
    </children>
 </AnchorPane>
