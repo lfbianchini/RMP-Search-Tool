@@ -14,22 +14,22 @@
    <children>
       <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
          <children>
-            <MenuButton fx:id="professorMenuButton" layoutX="165.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" prefHeight="38.0" prefWidth="113.0">
+            <MenuButton fx:id="professorMenuButton" layoutX="190.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" prefHeight="38.0" prefWidth="113.0">
               <items>
 
               </items>
             </MenuButton>
-            <TextField fx:id="professorTextField" layoutX="73.0" layoutY="110.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
-            <Text fx:id="help" layoutX="73.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
+            <TextField fx:id="professorTextField" layoutX="106.0" layoutY="110.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
+            <Text fx:id="help" layoutX="106.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
                <font>
                   <Font name="Microsoft JhengHei Light" size="12.0" />
                </font>
             </Text>
-            <Button fx:id="professorNameButton" layoutX="306.0" layoutY="110.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" onMouseClicked="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
+            <Button fx:id="professorNameButton" layoutX="339.0" layoutY="110.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" onMouseClicked="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="12.0" />
                </font></Button>
-            <Text layoutX="179.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
+            <Text layoutX="212.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="12.0" />
                </font>
@@ -55,5 +55,6 @@
             <Font name="Microsoft JhengHei UI Light" size="13.0" />
          </font>
       </Button>
+      <Text fill="#5532e5" layoutX="160.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If your query is inconclusive, try being more specific with your search." underline="true" wrappingWidth="280.12109375" />
    </children>
 </AnchorPane>

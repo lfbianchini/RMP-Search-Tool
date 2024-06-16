@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -27,6 +28,7 @@
                   <Font name="Microsoft JhengHei UI Light" size="30.0" />
                </font>
             </Text>
+            <ProgressIndicator fx:id="professorProgress" layoutX="236.0" layoutY="188.0" opacity="0.0" progress="0.0" />
          </children>
       </AnchorPane>
       <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">

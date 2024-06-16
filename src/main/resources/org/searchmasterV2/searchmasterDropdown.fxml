@@ -55,5 +55,6 @@
             <Font name="Microsoft JhengHei UI Light" size="13.0" />
          </font>
       </Button>
+      <Text fill="#5532e5" layoutX="160.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If your query is inconclusive, try being more specific with your search." underline="true" wrappingWidth="280.12109375" />
    </children>
 </AnchorPane>
