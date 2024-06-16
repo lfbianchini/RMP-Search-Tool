@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import static org.searchmasterV2.App.loadFXML;
 import static org.searchmasterV2.App.stage;
 import static org.searchmasterV2.controllers.DataTransitionController.data;
