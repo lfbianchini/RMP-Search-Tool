@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -13,27 +14,46 @@
    <children>
       <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
          <children>
-            <Text fx:id="professorPromptText" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can you tell us the university name that the professor you have in mind teaches at?" wrappingWidth="261.376953125" />
-            <TextField fx:id="professorTextField" layoutX="14.0" layoutY="48.0" promptText="e.g. &quot;Jane Doe&quot;" />
-            <Button layoutX="169.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#professorNameSubmitClicked" text="Submit" />
-            <MenuButton fx:id="professorMenuButton" layoutX="120.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" text="Professor List">
+            <MenuButton fx:id="professorMenuButton" layoutX="165.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" prefHeight="38.0" prefWidth="113.0">
               <items>
 
               </items>
             </MenuButton>
-            <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here are the first three results from your search, please pick one:" wrappingWidth="99.0" />
+            <TextField fx:id="professorTextField" layoutX="73.0" layoutY="110.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
+            <Text fx:id="help" layoutX="73.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
+               <font>
+                  <Font name="Microsoft JhengHei Light" size="12.0" />
+               </font>
+            </Text>
+            <Button fx:id="professorNameButton" layoutX="306.0" layoutY="110.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" onMouseClicked="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="12.0" />
+               </font></Button>
+            <Text layoutX="179.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="12.0" />
+               </font>
+            </Text>
+            <Text layoutX="145.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="30.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
       <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
-            <Circle fill="#48494b" layoutX="27.0" layoutY="77.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
-            <Pane layoutX="24.0" layoutY="101.0" prefHeight="34.0" prefWidth="7.0" style="-fx-background-color: #48494b;" />
-            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="160.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#48494b" layoutX="27.0" layoutY="116.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="140.0" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="199.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="225.0" opacity="0.25" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="285.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Arc fill="#48494b" layoutX="27.0" layoutY="199.0" length="180.0" radiusX="19.0" radiusY="19.0" startAngle="360.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
          </children></Pane>
-      <Text layoutX="136.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
+      <Button fx:id="backButton" layoutX="532.0" layoutY="358.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="28.0" prefWidth="54.0" text="BACK">
          <font>
-            <Font name="Microsoft JhengHei UI Light" size="30.0" />
+            <Font name="Microsoft JhengHei UI Light" size="13.0" />
          </font>
-      </Text>
+      </Button>
    </children>
 </AnchorPane>
