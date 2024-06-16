@@ -72,7 +72,6 @@ public class Functionality {
                     button = driver.findElement(new By.ByCssSelector("#IL_SR_X2 > svg:nth-child(1) > g:nth-child(1) > path:nth-child(4)"));
                 }
                 button.click();
-                continue;
             } catch(StaleElementReferenceException e) {
                 System.out.println(Arrays.toString(e.getStackTrace()));
                 return;
@@ -82,33 +81,35 @@ public class Functionality {
 
     public static HashMap<String, String> getUniversityID(String name) throws IOException {
         String clean = formatNameForQuery(name);
-        String query = "https://www.ratemyprofessors.com/search/schools?q=" + clean; //format url
+        String query = "https://www.ratemyprofessors.com/search/schools?q=" + clean;
         HashMap<String, String> map = new HashMap<>();
-        Document page = Jsoup.connect(query).timeout(3000).userAgent("Mozilla/126.0").get(); //mozilla agent to connect to the page
-        for(int i=1; i<4; i++) {
-            Elements pageElements = page.select("a.SchoolCard__StyledSchoolCard-sc-130cnkk-0:nth-child(" + i + ")");
-            String id = pageElements.get(0).attributes().get("href").substring(8);
-            String uniName = Objects.requireNonNull(Objects.requireNonNull(pageElements.first()).selectFirst("div:nth-child(2) > div:nth-child(1)")).text();
-            map.put(uniName, id);
+        Document page = Jsoup.connect(query).timeout(3000).userAgent("Mozilla/126.0").get();
+        Elements pageElements = page.select("a.SchoolCard__StyledSchoolCard-sc-130cnkk-0");
+        for (Element element : pageElements) {
+            String href = element.attributes().get("href");
+            if (href != null && href.startsWith("/")) {
+                String id = href.substring(8);
+                String uniName = Objects.requireNonNull(element.selectFirst("div:nth-child(2) > div:nth-child(1)")).text();
+                map.put(uniName, id);
+            }
         }
         return map;
     }
 
     public static HashMap<String, String> getProfessorId(String universityID, String name) throws IOException {
-        String clean = formatNameForQuery(name); //clean the name
-        String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean; //format url
-        driver.get(query); //go to the query site
+        String clean = formatNameForQuery(name);
+        String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean;
+        driver.get(query);
         Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
         driver.manage().addCookie(cookie2);
         driver.get(query);
         driver.manage().window().minimize();
-
         HashMap<String, String> map = new HashMap<>();
-        Document page = Jsoup.parse(driver.getPageSource()); //hand selenium driver's source back to jsoup
-        for(int i=1; i<4; i++) {
-            Elements pageElements = page.select("a.TeacherCard__StyledTeacherCard-syjs0d-0:nth-child(" + i + ")");
-            String id = pageElements.get(0).attributes().get("href").substring(11);
-            String profName = Objects.requireNonNull(Objects.requireNonNull(pageElements.first()).selectFirst("div:nth-child(1) > div:nth-child(2) > div:nth-child(1)")).text();
+        Document page = Jsoup.parse(driver.getPageSource());
+        Elements pageElements = page.select("a.TeacherCard__StyledTeacherCard-syjs0d-0");
+        for (int i = 0; i < pageElements.size(); i++) {
+            String id = pageElements.get(i).attributes().get("href").substring(11);
+            String profName = Objects.requireNonNull(Objects.requireNonNull(pageElements.get(i)).selectFirst("div:nth-child(1) > div:nth-child(2) > div:nth-child(1)")).text();
             map.put(profName, id);
         }
         return map;
@@ -134,6 +135,7 @@ public class Functionality {
         }
         return reviews;
     }
+
     //returns professors overall sentiment values ex: [25,25,25,26,24]
     public static long[] getAverageProfSentiments(String professorID) throws IOException {
         ArrayList<String> professorReviews = getProfessorReviews(professorID);

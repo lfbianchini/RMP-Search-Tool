@@ -4,10 +4,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import org.searchmasterV2.Functionality;
@@ -32,10 +29,13 @@ public class ProfessorPromptControllerPrimary {
     @FXML
     private Button backButton;
 
-    private static HashMap<String, String> professorMap;
-    private String professorID;
+    @FXML
+    private ProgressIndicator professorProgress;
 
+    private static HashMap<String, String> professorMap;
+    public static String professorID;
     private boolean isLoading = false;
+    private static boolean isFirst = true;
 
     @FXML
     public void initialize() {
@@ -68,7 +68,11 @@ public class ProfessorPromptControllerPrimary {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                setLoading(false);
+                try {
+                    setLoading(false);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             });
 
             task.setOnFailed(e -> {
@@ -77,24 +81,41 @@ public class ProfessorPromptControllerPrimary {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                setLoading(false);
+                try {
+                    setLoading(false);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             });
 
             new Thread(task).start();
         }
     }
 
-    private void setLoading(boolean loading) {
+    private void setLoading(boolean loading) throws IOException {
         isLoading = loading;
         if (loading) {
+            if (isFirst) {
+                initializeProgressIndicator();
+            }
             professorTextField.setDisable(true);
             professorNameButton.setDisable(true);
             professorNameButton.setStyle("-fx-opacity: 0.4;");
         } else {
+            if (isFirst) {
+                professorProgress.setStyle("-fx-opacity: 0.0;");
+                isFirst = false;
+            }
             professorTextField.setDisable(false);
             professorNameButton.setDisable(false);
             professorNameButton.setStyle("");
         }
+    }
+
+    private void initializeProgressIndicator() {
+        professorProgress.setPrefSize(25, 25);
+        professorProgress.setStyle("-fx-progress-color: black; -fx-opacity: 1.0;");
+        professorProgress.setProgress(-1);
     }
 
     @FXML
