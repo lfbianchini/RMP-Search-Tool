@@ -17,7 +17,10 @@
                   <Font name="Microsoft JhengHei Light" size="12.0" />
                </font></Text>
             <TextField fx:id="universityTextField" layoutX="90.0" layoutY="123.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Purdue&quot;" />
-            <Button fx:id="universityNameButton" layoutX="321.0" layoutY="123.0" mnemonicParsing="false" onAction="#universityNameClicked" prefHeight="38.0" prefWidth="69.0" text="Submit" />
+            <Button fx:id="universityNameButton" layoutX="321.0" layoutY="123.0" mnemonicParsing="false" onAction="#universityNameClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
+               <font>
+                  <Font name="Microsoft YaHei UI Light" size="12.0" />
+               </font></Button>
             <Text layoutX="126.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="30.0" />
@@ -27,10 +30,17 @@
       </AnchorPane>
       <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
-            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="76.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
-            <Pane layoutX="24.0" layoutY="101.0" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
-            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="160.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="117.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="142.0" opacity="0.25" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="201.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="224.0" opacity="0.25" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="284.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </Pane>
+      <Button layoutX="532.0" layoutY="358.0" mnemonicParsing="false" opacity="0.5" prefHeight="28.0" prefWidth="54.0" text="BACK">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

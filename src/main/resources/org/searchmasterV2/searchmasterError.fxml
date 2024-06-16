@@ -13,7 +13,10 @@
       <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
          <children>
             <TextField fx:id="universityTextField" layoutX="91.0" layoutY="114.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Purdue&quot;" />
-            <Button fx:id="universitySubmitButton" layoutX="322.0" layoutY="114.0" mnemonicParsing="false" onAction="#universityNameClicked" prefHeight="38.0" prefWidth="69.0" text="Submit" />
+            <Button fx:id="universityNameButton" layoutX="322.0" layoutY="114.0" mnemonicParsing="false" onAction="#universityNameClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="12.0" />
+               </font></Button>
             <Text fill="#e83333" layoutX="101.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="It looks like we couldn't find a university with that name. Please try again." underline="true" wrappingWidth="280.12109375" />
             <Text fx:id="help" layoutX="91.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UNIVERSITY NAME" textAlignment="CENTER" wrappingWidth="300.0">
                <font>
@@ -29,9 +32,16 @@
       </AnchorPane>
       <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
-            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="76.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
-            <Pane layoutX="24.0" layoutY="101.0" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
-            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="160.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="116.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="141.0" opacity="0.25" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="200.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="24.0" layoutY="225.0" opacity="0.25" prefHeight="34.0" prefWidth="5.0" style="-fx-background-color: #48494b;" />
+            <Circle fill="#d4d4d4" layoutX="27.0" layoutY="285.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
          </children></Pane>
+      <Button layoutX="532.0" layoutY="358.0" mnemonicParsing="false" opacity="0.5" prefHeight="28.0" prefWidth="54.0" text="BACK">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
