@@ -12,6 +12,7 @@ public class Loader {
     private long[] getSentiments;
 
     public Loader(String professorID) throws IOException {
+        Functionality.initializeDriver(professorID);
         this.professorRating = Functionality.getProfessorRating(professorID);
         this.ratings = Functionality.getProfessorReviews(professorID);
         this.averageProfessorGrade = Functionality.averageProfGrade(professorID);
