@@ -1,13 +1,11 @@
 package org.searchmasterV2.controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
-import javafx.util.Duration;
 import org.searchmasterV2.Loader;
 import java.io.IOException;
 
@@ -25,16 +23,7 @@ public class DataTransitionController {
 
     public static Loader data;
 
-    static {
-        try {
-            data = new Loader(professorID);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to initialize DataTransitionController", e);
-        }
-    }
-
     public DataTransitionController() {
-
     }
 
     @FXML
@@ -42,16 +31,25 @@ public class DataTransitionController {
         progressIndicator2.setStyle("-fx-progress-color: black;");
         progressIndicator2.setProgress(-1);
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1.5), event -> {
-                    try {
-                        stage.setScene(new Scene(loadFXML("searchmasterDataDash")));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                })
-        );
-        timeline.play();
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                data = new Loader(professorID);
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                try {
+                    stage.setScene(new Scene(loadFXML("searchmasterDataDash")));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+
+        new Thread(task).start();
     }
 
     @FXML
