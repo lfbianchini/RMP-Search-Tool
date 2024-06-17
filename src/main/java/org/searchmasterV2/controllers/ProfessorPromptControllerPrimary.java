@@ -57,7 +57,11 @@ public class ProfessorPromptControllerPrimary {
             Task<HashMap<String, String>> task = new Task<HashMap<String, String>>() {
                 @Override
                 protected HashMap<String, String> call() throws Exception {
-                    return Functionality.getProfessorId(universityID, professorTextField.getText());
+                    HashMap<String, String> map = Functionality.getProfessorId(universityID, professorTextField.getText());
+                    if(map.isEmpty()) {
+                        throw new Exception();
+                    }
+                    return map;
                 }
             };
 

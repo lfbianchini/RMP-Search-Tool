@@ -9,12 +9,14 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 import org.ejml.simple.SimpleMatrix;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -28,6 +30,8 @@ import org.openqa.selenium.interactions.Actions;
 public class Functionality {
     static WebDriver driver;
     static StanfordCoreNLP pipeline;
+    static Document loadedPage;
+    static Connection jsoupConnection;
     static {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -39,16 +43,11 @@ public class Functionality {
     }
 
     public static void initializeDriver(String professorID) {
-        loadEntirePage(driver, professorID);
+        loadedPage = loadEntirePage(driver, professorID);
+        driver.quit();
     }
 
-    public static void shutdownWebDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-
-    public static void loadEntirePage(WebDriver driver, String professorID) {
+    public static Document loadEntirePage(WebDriver driver, String professorID) {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
         driver.get("https://www.ratemyprofessors.com/professor/" + professorID);
@@ -64,7 +63,7 @@ public class Functionality {
                 actions.scrollByAmount(0, 4000);
                 WebElement button = driver.findElement(buttonLocator);
                 button.click();
-            } catch (org.openqa.selenium.NoSuchElementException e) {
+            } catch (NoSuchElementException | StaleElementReferenceException e) {
                 System.out.println(Arrays.toString(e.getStackTrace()));
                 break;
             } catch (ElementClickInterceptedException e) {
@@ -76,22 +75,21 @@ public class Functionality {
                     button = driver.findElement(new By.ByCssSelector("#IL_SR_X2 > svg:nth-child(1) > g:nth-child(1) > path:nth-child(4)"));
                 }
                 button.click();
-            } catch(StaleElementReferenceException e) {
-                System.out.println(Arrays.toString(e.getStackTrace()));
-                return;
             }
         }
+        return Jsoup.parse(driver.getPageSource());
     }
 
     public static HashMap<String, String> getUniversityID(String name) throws IOException {
         String clean = formatNameForQuery(name);
         String query = "https://www.ratemyprofessors.com/search/schools?q=" + clean;
         HashMap<String, String> map = new HashMap<>();
-        Document page = Jsoup.connect(query).timeout(3000).userAgent("Mozilla/126.0").get();
+        jsoupConnection = Jsoup.connect(query);
+        Document page = jsoupConnection.get();
         Elements pageElements = page.select("a.SchoolCard__StyledSchoolCard-sc-130cnkk-0");
         for (Element element : pageElements) {
             String href = element.attributes().get("href");
-            if (href != null && href.startsWith("/")) {
+            if (href.startsWith("/")) {
                 String id = href.substring(8);
                 String uniName = Objects.requireNonNull(element.selectFirst("div:nth-child(2) > div:nth-child(1)")).text();
                 map.put(uniName, id);
@@ -111,9 +109,9 @@ public class Functionality {
         HashMap<String, String> map = new HashMap<>();
         Document page = Jsoup.parse(driver.getPageSource());
         Elements pageElements = page.select("a.TeacherCard__StyledTeacherCard-syjs0d-0");
-        for (int i = 0; i < pageElements.size(); i++) {
-            String id = pageElements.get(i).attributes().get("href").substring(11);
-            String profName = Objects.requireNonNull(Objects.requireNonNull(pageElements.get(i)).selectFirst("div:nth-child(1) > div:nth-child(2) > div:nth-child(1)")).text();
+        for (Element pageElement : pageElements) {
+            String id = pageElement.attributes().get("href").substring(11);
+            String profName = Objects.requireNonNull(Objects.requireNonNull(pageElement).selectFirst("div:nth-child(1) > div:nth-child(2) > div:nth-child(1)")).text();
             map.put(profName, id);
         }
         return map;
@@ -121,15 +119,13 @@ public class Functionality {
 
     public static String getProfessorRating(String professorID) throws IOException {
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
-        Document page = Jsoup.connect(query).get();
+        Document page = jsoupConnection.newRequest(query).get();
         Elements pageElements = page.select("#root > div > div > div.PageWrapper__StyledPageWrapper-sc-3p8f0h-0.lcpsHk > div.TeacherRatingsPage__TeacherBlock-sc-1gyr13u-1.jMpSNb > div.TeacherInfo__StyledTeacher-ti1fio-1.kFNvIp > div:nth-child(1) > div.RatingValue__AvgRating-qw8sqy-1.gIgExh > div > div.RatingValue__Numerator-qw8sqy-2.liyUjw");
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
     public static ArrayList<String> getProfessorReviews(String professorID) throws IOException {
-        Document page = Jsoup.parse(driver.getPageSource());
-        String query = "https://www.ratemyprofessors.com/professor/" + professorID;
-        Elements reviewList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
+        Elements reviewList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<String> reviews = new ArrayList<>();
         for(Element review : reviewList) {
             if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
@@ -182,9 +178,7 @@ public class Functionality {
     }
 
     public static ArrayList<Element> getMetadata(String professorID) throws IOException {
-        Document page = Jsoup.parse(driver.getPageSource());
-        String query = "https://www.ratemyprofessors.com/professor/" + professorID;
-        Elements classList = Objects.requireNonNull(page.selectFirst("#ratingsList")).children();
+        Elements classList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<Element> metadata = new ArrayList<>();
         for(Element classElement : classList) {
             if (!Objects.requireNonNull(classElement.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {

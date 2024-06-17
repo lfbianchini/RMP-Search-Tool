@@ -39,7 +39,7 @@
                   <Font name="Microsoft JhengHei Light" size="12.0" />
                </font>
             </Text>
-            <Text layoutX="199.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
+            <Text layoutX="199.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="12.0" />
                </font>

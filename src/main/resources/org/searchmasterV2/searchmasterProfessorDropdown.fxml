@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.TextField?>
@@ -10,31 +15,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.ProfessorPromptControllerPrimary">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.ProfessorPromptControllerPrimary">
    <children>
-      <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="228.0" prefWidth="301.0" style="-fx-background-color: #F2F3F4;">
+      <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="284.0" prefWidth="552.0" style="-fx-background-color: #F2F3F4;">
          <children>
-            <MenuButton fx:id="professorMenuButton" layoutX="190.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" prefHeight="38.0" prefWidth="113.0">
+            <MenuButton fx:id="professorMenuButton" layoutX="180.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#professorMenuButtonClicked" prefHeight="38.0" prefWidth="113.0">
               <items>
 
               </items>
             </MenuButton>
-            <TextField fx:id="professorTextField" layoutX="106.0" layoutY="110.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
-            <Text fx:id="help" layoutX="106.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
+            <TextField fx:id="professorTextField" layoutX="90.0" layoutY="123.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
+            <Text fx:id="help" layoutX="91.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
                <font>
                   <Font name="Microsoft JhengHei Light" size="12.0" />
                </font>
             </Text>
-            <Button fx:id="professorNameButton" layoutX="339.0" layoutY="110.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" onMouseClicked="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
+            <Button fx:id="professorNameButton" layoutX="321.0" layoutY="123.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" onMouseClicked="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="12.0" />
                </font></Button>
-            <Text layoutX="212.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
+            <Text layoutX="199.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESULTS" textAlignment="CENTER" wrappingWidth="75.0">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="12.0" />
                </font>
             </Text>
-            <Text layoutX="145.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
+            <Text layoutX="126.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
                <font>
                   <Font name="Microsoft JhengHei UI Light" size="30.0" />
                </font>
@@ -55,6 +60,6 @@
             <Font name="Microsoft JhengHei UI Light" size="13.0" />
          </font>
       </Button>
-      <Text fill="#5532e5" layoutX="160.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If your query is inconclusive, try being more specific with your search." underline="true" wrappingWidth="280.12109375" />
+      <Text fill="#5532e5" layoutX="160.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If your query is inconclusive, try being more specific with your search." underline="true" wrappingWidth="280.12109375" />
    </children>
 </AnchorPane>
