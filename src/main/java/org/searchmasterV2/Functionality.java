@@ -42,20 +42,24 @@ public class Functionality {
         loadEntirePage(driver, professorID);
     }
 
+    public static void shutdownWebDriver() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
     public static void loadEntirePage(WebDriver driver, String professorID) {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
-        driver.get("https://www.ratemyprofessors.com/professor/" + professorID); // replace with the actual
+        driver.get("https://www.ratemyprofessors.com/professor/" + professorID);
         Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
         driver.manage().addCookie(cookie2);
         driver.get("https://www.ratemyprofessors.com/professor/" + professorID);
 
-        // Locator for the button
-        By buttonLocator = By.cssSelector(".Buttons__Button-sc-19xdot-1"); // replace with the actual locator (e.g., id, class, xpath)
-        // Loop to click the button until it is no longer present
+        By buttonLocator = By.cssSelector(".Buttons__Button-sc-19xdot-1");
+
         while (true) {
             try {
-                // Find the button
                 Actions actions = new Actions(driver);
                 actions.scrollByAmount(0, 4000);
                 WebElement button = driver.findElement(buttonLocator);
@@ -136,7 +140,6 @@ public class Functionality {
         return reviews;
     }
 
-    //returns professors overall sentiment values ex: [25,25,25,26,24]
     public static long[] getAverageProfSentiments(String professorID) throws IOException {
         ArrayList<String> professorReviews = getProfessorReviews(professorID);
         long[] avgArr = new long[5];
@@ -281,8 +284,8 @@ public class Functionality {
         return averageGrade(getGrades(getMetadata(professorID)));
     }
 
-    public static String formatNameForQuery(String name) { //method for formatting names into query form eg "university    of washington" => "university%20of%20washington"
-        String clean = name.trim().replaceAll(" +", " "); //remove all trailing/leading w.s. + any extra in middle
+    public static String formatNameForQuery(String name) {
+        String clean = name.trim().replaceAll(" +", " ");
         if(clean.contains(" ")) {
             clean = clean.replace(" ", "%20");
         }
