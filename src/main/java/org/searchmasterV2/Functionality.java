@@ -31,7 +31,7 @@ public class Functionality {
     static StanfordCoreNLP pipeline;
     static Document loadedPage;
     static Connection jsoupConnection;
-    //static List<List<Long>>
+    static List<List<Long>> sentimentList;
     static {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -152,15 +152,15 @@ public class Functionality {
 
     public static long[] getAverageProfSentiments(String professorID) throws IOException {
         ArrayList<String> professorReviews = getProfessorReviews(professorID);
-        List<List<Long>> reviewSentiments = Collections.synchronizedList(new ArrayList<>());
+        sentimentList = Collections.synchronizedList(new ArrayList<>());
         professorReviews.parallelStream().map(review -> {
-            reviewSentiments.add(getSentiments(review));
+            sentimentList.add(getSentiments(review));
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];
         int arrIndex = 0;
         int count = 1;
-        for(List<Long> review : reviewSentiments) {
+        for(List<Long> review : sentimentList) {
             for(Long reviewScore : review) {
                 avgArr[arrIndex] += reviewScore;
                 arrIndex++;
@@ -172,6 +172,29 @@ public class Functionality {
         return Arrays.stream(avgArr)
             .map(value -> value/professorReviews.size())
             .toArray();
+    }
+    public static void consolidateSentimentList() {
+        for(List<Long> review : sentimentList) {
+            review.set(1, review.get(1) + review.get(0));
+            review.set(3, review.get(3) + review.get(4));
+            review.remove(0);
+            review.remove(3);
+        }
+    }
+    public static List<Long> getSentimentListFrequency() {
+        consolidateSentimentList();
+        List<Long> frequencyList = Arrays.asList(0L, 0L, 0L);
+        for(List<Long> review : sentimentList) {
+            Long max = Collections.max(review);
+            if(review.indexOf(max) == 0) {
+                frequencyList.set(0, frequencyList.get(0) + 1);
+            } else if(review.indexOf(max) == 1) {
+                frequencyList.set(1, frequencyList.get(1) + 1);
+            } else if(review.indexOf(max) == 2) {
+                frequencyList.set(2, frequencyList.get(2) + 1);
+            }
+        }
+        return frequencyList;
     }
 
     public static List<Long> getSentiments(String paragraph) {
@@ -317,5 +340,12 @@ public class Functionality {
 //                        "and exams that tests contents that aren't practiced during homework. Avoid if you care about your gpa."));
 //        System.out.println(getSentiments("Prof Bouwer is phenomenal so passionate about material and topics you will cover! i will say this course (FREN360) is heavy on READING and writing so keep that in mind, you will also get called on so stay prepared! tough grader so do the extra credit, she is understanding if you communicate, attendance is important to keep up. find a friend."));
 //        System.out.println(getSentiments("She is beyond the best professor I have had so far. She is great, always there to help you and will make sure you understand. She is open-minded and let you have an opinion! Her classes were fun, I was always excited to go. we had 1 midterm and a research paper at the end. Attendance is mandatory by the way."));
+//        List<List<Long>> list = new ArrayList<>();
+//        list.add(new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L)));
+//        list.add(new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L)));
+//        list.add(new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L)));
+//        sentimentList = list;
+//        System.out.println(getSentimentListFrequency());
     }
+
 }
