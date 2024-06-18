@@ -2,6 +2,9 @@ package org.searchmasterV2;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
+
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.*;
@@ -138,15 +141,21 @@ public class Functionality {
 
     public static long[] getAverageProfSentiments(String professorID) throws IOException {
         ArrayList<String> professorReviews = getProfessorReviews(professorID);
+        List<List<Long>> reviewSentiments = Collections.synchronizedList(new ArrayList<>());
+        professorReviews.parallelStream().map(review -> {
+            reviewSentiments.add(getSentiments(review));
+            return review;
+        }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];
-        long[] sentimentArr;
+        int arrIndex = 0;
         int count = 1;
-        for(String review : professorReviews) {
-            sentimentArr = getSentiments(review);
-            for(int i=0; i<avgArr.length; i++) {
-                avgArr[i] += sentimentArr[i];
+        for(List<Long> review : reviewSentiments) {
+            for(Long reviewScore : review) {
+                avgArr[arrIndex] += reviewScore;
+                arrIndex++;
             }
             System.out.println("review " + count + " done");
+            arrIndex = 0;
             count++;
         }
         return Arrays.stream(avgArr)
@@ -154,7 +163,7 @@ public class Functionality {
             .toArray();
     }
 
-    public static long[] getSentiments(String paragraph) {
+    public static List<Long> getSentiments(String paragraph) {
         Annotation document = pipeline.process(paragraph);
         Collection<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
         int length = sentences.size();
@@ -172,9 +181,11 @@ public class Functionality {
                 avgSentiments[j] += sentiments[i][j];
             }
         }
-        return Arrays.stream(avgSentiments)
-            .map(value -> value/length)
-            .toArray();
+        List<Long> avgSentimentsList = new ArrayList<>();
+        for (long sentiment : avgSentiments) {
+            avgSentimentsList.add(sentiment);
+        }
+        return avgSentimentsList;
     }
 
     public static ArrayList<Element> getMetadata(String professorID) throws IOException {
