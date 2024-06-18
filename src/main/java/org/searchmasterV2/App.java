@@ -17,6 +17,7 @@ public class App extends Application {
         stage = primaryStage;
         scene = new Scene(loadFXML("loading_screen"));
         stage.setScene(scene);
+        stage.setOnCloseRequest(event -> Functionality.driver.quit());
         stage.show();
     }
 

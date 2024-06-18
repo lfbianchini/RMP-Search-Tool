@@ -53,10 +53,13 @@ public class UniversityPromptControllerPrimary {
             Task<HashMap<String, String>> task = new Task<HashMap<String, String>>() {
                 @Override
                 protected HashMap<String, String> call() throws Exception {
-                    return Functionality.getUniversityID(universityTextField.getText());
+                    HashMap<String, String> map = Functionality.getUniversityID(universityTextField.getText());
+                    if(map.isEmpty()) {
+                        throw new Exception();
+                    }
+                    return map;
                 }
             };
-
             task.setOnSucceeded(e -> {
                 HashMap<String, String> map = task.getValue();
                 universitySet = map;
