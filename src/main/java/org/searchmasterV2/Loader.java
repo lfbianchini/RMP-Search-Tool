@@ -5,22 +5,22 @@ import java.util.*;
 
 public class Loader {
 
-    private String professorRating;
-    private String wouldTakeAgain;
-    private String levelOfDifficulty;
-    private ArrayList<String> ratings = new ArrayList<>();
-    private String averageProfessorGrade;
-    private long[] averageProfessorSentiments;
+    private final String professorRating;
+    private final String wouldTakeAgain;
+    private final String levelOfDifficulty;
+    private final ArrayList<Review> reviewList;
+    private final String averageProfessorGrade;
+    private final long[] averageProfessorSentiments;
     private long[] getSentiments;
 
     public Loader(String professorID) throws IOException {
-        Functionality.initializeDriver(professorID);
-        this.professorRating = Functionality.getProfessorRating(professorID);
-        this.wouldTakeAgain = Functionality.getProfessorWouldTakeAgain(professorID);
-        this.levelOfDifficulty = Functionality.getProfessorDifficulty(professorID);
-        this.ratings = Functionality.getProfessorReviews(professorID);
-        this.averageProfessorGrade = Functionality.averageProfGrade(professorID);
-        this.averageProfessorSentiments = Functionality.getAverageProfSentiments(professorID);
+        Professor.initializeDriver(professorID);
+        this.professorRating = Professor.getProfessorRating(professorID);
+        this.wouldTakeAgain = Professor.getProfessorWouldTakeAgain(professorID);
+        this.levelOfDifficulty = Professor.getProfessorDifficulty(professorID);
+        this.reviewList = Professor.getProfessorReviews(professorID);
+        this.averageProfessorGrade = Professor.averageProfGrade(professorID);
+        this.averageProfessorSentiments = Professor.getAverageProfSentiments(professorID);
         //this.getSentiments = Functionality.getSentiments(professorID);
     }
 

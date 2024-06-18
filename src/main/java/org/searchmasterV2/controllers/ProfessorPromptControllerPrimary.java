@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import org.searchmasterV2.Functionality;
+import org.searchmasterV2.Professor;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -58,7 +58,7 @@ public class ProfessorPromptControllerPrimary {
             Task<HashMap<String, String>> task = new Task<HashMap<String, String>>() {
                 @Override
                 protected HashMap<String, String> call() throws Exception {
-                    HashMap<String, String> map = Functionality.getProfessorId(universityID, professorTextField.getText());
+                    HashMap<String, String> map = Professor.getProfessorId(universityID, professorTextField.getText());
                     if(map.isEmpty()) {
                         throw new Exception();
                     }

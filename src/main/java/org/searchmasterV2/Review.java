@@ -1,9 +1,7 @@
 package org.searchmasterV2;
 
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Review {
@@ -30,9 +28,5 @@ public class Review {
 //        }
         String year = datePlainText.substring(datePlainText.indexOf(',')+1);
         System.out.println(month + " " + day + " " + year);
-    }
-
-    public static void main(String[] args) {
-        dateHelper("May 22nd, 2024");
     }
 }

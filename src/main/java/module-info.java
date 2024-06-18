@@ -9,6 +9,7 @@ module org.searchmasterV2 {
     requires ejml.simple;
     requires org.jsoup;
     requires java.desktop;
+    requires lucene.core;
 
     opens org.searchmasterV2 to javafx.fxml;
     exports org.searchmasterV2;

@@ -28,7 +28,7 @@ import org.openqa.selenium.interactions.Actions;
 import static org.searchmasterV2.Grade.getString;
 
 
-public class Functionality {
+public class Professor {
     static WebDriver driver;
     static StanfordCoreNLP pipeline;
     static Document loadedPage;
@@ -184,6 +184,7 @@ public class Functionality {
             review.remove(3);
         }
     }
+
     public static List<Long> getSentimentListFrequency() {
         consolidateSentimentList();
         List<Long> frequencyList = Arrays.asList(0L, 0L, 0L);
@@ -225,6 +226,14 @@ public class Functionality {
         return avgSentimentsList;
     }
 
+    public static String formatNameForQuery(String name) {
+        String clean = name.trim().replaceAll(" +", " ");
+        if(clean.contains(" ")) {
+            clean = clean.replace(" ", "%20");
+        }
+        return clean;
+    }
+
     public static ArrayList<Element> getMetadata(String professorID) throws IOException {
         Elements classList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<Element> metadata = new ArrayList<>();
@@ -233,7 +242,6 @@ public class Functionality {
                 Elements reviewMeta = Objects.requireNonNull(classElement.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children();
                 metadata.addAll(reviewMeta);
             }
-            continue;
         }
         return metadata;
     }
@@ -241,7 +249,7 @@ public class Functionality {
     public static ArrayList<String> getGrades(ArrayList<Element> metadata) {
         ArrayList<String> grades = new ArrayList<>();
         for (Element meta: metadata) {
-            if(meta.text().contains("Grade: ") && !meta.text().contains("Not sure yet")) {
+            if (meta.text().contains("Grade: ") && !meta.text().contains("Not sure yet")) {
                 grades.add(meta.text().substring(7));
             }
         }
@@ -297,14 +305,6 @@ public class Functionality {
 
     public static String averageProfGrade(String professorID) throws IOException {
         return averageGrade(getGrades(getMetadata(professorID)));
-    }
-
-    public static String formatNameForQuery(String name) {
-        String clean = name.trim().replaceAll(" +", " ");
-        if(clean.contains(" ")) {
-            clean = clean.replace(" ", "%20");
-        }
-        return clean;
     }
 
     public static void main(String[] args) throws IOException {
