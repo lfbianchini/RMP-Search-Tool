@@ -25,6 +25,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
+import static org.searchmasterV2.Grade.getString;
+
 
 public class Functionality {
     static WebDriver driver;
@@ -144,6 +146,7 @@ public class Functionality {
         for(Element review : reviewList) {
             if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
                 reviews.add(review.select("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)").text());
+                //#ratingsList > li:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)
             }
             continue;
         }
@@ -289,34 +292,7 @@ public class Functionality {
             }
         }
         avgWeight = avgWeight / grades.size();
-        String avgWeightLetter = "";
-        if (avgWeight >= 3.85 && avgWeight <= 4.0) {
-            avgWeightLetter = "A";
-        } else if (avgWeight >= 3.50 && avgWeight < 3.85) {
-            avgWeightLetter = "A-";
-        } else if (avgWeight >= 3.15 && avgWeight < 3.50) {
-            avgWeightLetter = "B+";
-        } else if (avgWeight >= 2.85 && avgWeight < 3.15) {
-            avgWeightLetter = "B";
-        } else if (avgWeight >= 2.50 && avgWeight < 2.85) {
-            avgWeightLetter = "B-";
-        } else if (avgWeight >= 2.15 && avgWeight < 2.50) {
-            avgWeightLetter = "C+";
-        } else if (avgWeight >= 1.85 && avgWeight < 2.15) {
-            avgWeightLetter = "C";
-        } else if (avgWeight >= 1.50 && avgWeight < 1.85) {
-            avgWeightLetter = "C-";
-        } else if (avgWeight >= 1.15 && avgWeight < 1.50) {
-            avgWeightLetter = "D+";
-        } else if (avgWeight >= 0.85 && avgWeight < 1.15) {
-            avgWeightLetter = "D";
-        } else if (avgWeight >= 0.70 && avgWeight < 0.85) {
-            avgWeightLetter = "D-";
-        } else if (avgWeight >= 0.0 && avgWeight < 0.70) {
-            avgWeightLetter = "F";
-        }
-
-        return avgWeightLetter;
+        return getString(avgWeight);
     }
 
     public static String averageProfGrade(String professorID) throws IOException {
