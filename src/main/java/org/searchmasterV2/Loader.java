@@ -16,8 +16,8 @@ public class Loader {
     public Loader(String professorID) throws IOException {
         Functionality.initializeDriver(professorID);
         this.professorRating = Functionality.getProfessorRating(professorID);
-        //this.wouldTakeAgain = Functionality.getProfessorWouldTakeAgain(professorID);
-        //this.levelOfDifficulty = Functionality.getProfessorlevelOfDifficulty(professorID);
+        this.wouldTakeAgain = Functionality.getProfessorWouldTakeAgain(professorID);
+        this.levelOfDifficulty = Functionality.getProfessorDifficulty(professorID);
         this.ratings = Functionality.getProfessorReviews(professorID);
         this.averageProfessorGrade = Functionality.averageProfGrade(professorID);
         this.averageProfessorSentiments = Functionality.getAverageProfSentiments(professorID);
@@ -28,13 +28,13 @@ public class Loader {
         return professorRating;
     }
 
-    /*public String getProfessorWouldTakeAgain() {
+    public String getProfessorWouldTakeAgain() {
         return wouldTakeAgain;
     }
 
-    public String getProfessorlevelOfDifficulty() {
+    public String getProfessorLevelOfDifficulty() {
         return levelOfDifficulty;
-    }*/
+    }
 
     public ArrayList<String> getRatings() {
         return ratings;

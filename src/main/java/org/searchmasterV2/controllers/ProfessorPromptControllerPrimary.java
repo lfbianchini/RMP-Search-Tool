@@ -34,6 +34,7 @@ public class ProfessorPromptControllerPrimary {
 
     private static HashMap<String, String> professorMap;
     public static String professorID;
+    public static String professorName;
     private boolean isLoading = false;
     private static boolean isFirst = true;
 
@@ -128,6 +129,7 @@ public class ProfessorPromptControllerPrimary {
         for (String str : professorMap.keySet()) {
             MenuItem menuItem = new MenuItem(str);
             menuItem.setOnAction(actionEvent -> {
+                professorName = str;
                 professorID = professorMap.get(str);
                 try {
                     stage.setScene(new Scene(loadFXML("searchMasterDataTransition")));

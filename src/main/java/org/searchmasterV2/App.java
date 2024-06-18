@@ -18,6 +18,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("loading_screen"));
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> Functionality.driver.quit());
+        stage.setTitle("SMV1.0");
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.DataDashboardController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.DataDashboardController">
    <children>
       <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
@@ -29,30 +22,67 @@
             <Circle fill="#48494b" layoutX="27.0" layoutY="284.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </Pane>
-      <Pagination fx:id="pagination" layoutX="-1.0" layoutY="-1.0" pageCount="5" prefHeight="400.0" prefWidth="600.0" />
       <Button fx:id="backButton2" layoutX="532.0" layoutY="358.0" mnemonicParsing="false" onAction="#backButton2Clicked" prefHeight="28.0" prefWidth="54.0" text="BACK">
          <font>
             <Font name="Microsoft JhengHei UI Light" size="13.0" />
          </font>
       </Button>
-      <Hyperlink layoutX="229.0" layoutY="21.0" text="RMP URL TO PROFESSOR" />
-      <Text layoutX="192.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RATING" textAlignment="CENTER" wrappingWidth="92.8388671875">
+      <Text layoutX="209.0" layoutY="115.0" scaleX="0.9" scaleY="0.9" strokeType="OUTSIDE" strokeWidth="0.0" text="RATING" textAlignment="CENTER" wrappingWidth="92.8388671875">
          <font>
             <Font name="Microsoft JhengHei UI Light" size="20.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="372.0" layoutY="76.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-      <Text layoutX="105.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WOULD TAKE AGAIN" textAlignment="CENTER" wrappingWidth="265.8388671875">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="389.0" layoutY="77.0" scaleX="0.9" scaleY="0.9" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+      <Text layoutX="122.0" layoutY="184.0" scaleX="0.9" scaleY="0.9" strokeType="OUTSIDE" strokeWidth="0.0" text="WOULD TAKE AGAIN" textAlignment="CENTER" wrappingWidth="265.8388671875">
          <font>
             <Font name="Microsoft JhengHei UI Light" size="20.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="372.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-      <Text layoutX="105.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AVERAGE GRADE" textAlignment="CENTER" wrappingWidth="265.8388671875">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="389.0" layoutY="146.0" scaleX="0.9" scaleY="0.9" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+      <Text layoutX="122.0" layoutY="254.0" scaleX="0.9" scaleY="0.9" strokeType="OUTSIDE" strokeWidth="0.0" text="AVERAGE GRADE" textAlignment="CENTER" wrappingWidth="265.8388671875">
          <font>
             <Font name="Microsoft JhengHei UI Light" size="20.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="372.0" layoutY="253.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="389.0" layoutY="217.0" scaleX="0.9" scaleY="0.9" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+      <Button fx:id="resetButton" layoutX="75.0" layoutY="359.0" mnemonicParsing="false" onAction="#resetButtonClicked" prefHeight="28.0" prefWidth="60.0" text="RESET">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="552.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageTwoClicked" prefHeight="25.0" prefWidth="25.0" />
+      <Line endX="100.0" layoutX="471.0" layoutY="197.0" rotate="30.0" startX="90.0" translateX="-1.0" translateY="1.5" />
+      <Line endX="100.0" layoutX="471.0" layoutY="202.0" rotate="-30.0" startX="90.0" translateX="-1.0" translateY="1.5" />
+      <Text layoutX="122.0" layoutY="327.0" scaleX="0.9" scaleY="0.9" strokeType="OUTSIDE" strokeWidth="0.0" text="DIFFICULTY" textAlignment="CENTER" wrappingWidth="265.8388671875">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="20.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="389.0" layoutY="290.0" scaleX="0.9" scaleY="0.9" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+      <Text fx:id="ratingText" layoutX="392.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft YaHei UI" size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="wouldTakeAgainText" layoutX="392.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft YaHei UI" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="averageGradeText" layoutX="392.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft YaHei UI" size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="difficultyText" layoutX="392.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft JhengHei UI" size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="professorNameText" layoutX="115.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="416.20703125">
+         <font>
+            <Font name="Segoe UI Semibold" size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

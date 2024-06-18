@@ -2,9 +2,6 @@ package org.searchmasterV2;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
-
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.*;
@@ -17,7 +14,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -35,6 +31,7 @@ public class Functionality {
     static StanfordCoreNLP pipeline;
     static Document loadedPage;
     static Connection jsoupConnection;
+    //static List<List<Long>>
     static {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -127,6 +124,20 @@ public class Functionality {
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
+    public static String getProfessorWouldTakeAgain(String professorID) throws IOException {
+        String query = "https://www.ratemyprofessors.com/professor/" + professorID;
+        Document page = jsoupConnection.newRequest(query).get();
+        Elements pageElements = page.select("div.FeedbackItem__StyledFeedbackItem-uof32n-0:nth-child(1) > div:nth-child(1)");
+        return Objects.requireNonNull(pageElements.first()).text();
+    }
+
+    public static String getProfessorDifficulty(String professorID) throws IOException {
+        String query = "https://www.ratemyprofessors.com/professor/" + professorID;
+        Document page = jsoupConnection.newRequest(query).get();
+        Elements pageElements = page.select("div.FeedbackItem__StyledFeedbackItem-uof32n-0:nth-child(2) > div:nth-child(1)");
+        return Objects.requireNonNull(pageElements.first()).text();
+    }
+
     public static ArrayList<String> getProfessorReviews(String professorID) throws IOException {
         Elements reviewList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<String> reviews = new ArrayList<>();
@@ -183,7 +194,7 @@ public class Functionality {
         }
         List<Long> avgSentimentsList = new ArrayList<>();
         for (long sentiment : avgSentiments) {
-            avgSentimentsList.add(sentiment);
+            avgSentimentsList.add(sentiment/length);
         }
         return avgSentimentsList;
     }
@@ -282,7 +293,7 @@ public class Functionality {
             avgWeightLetter = "F";
         }
 
-        return avgWeightLetter + ": " + String.valueOf(avgWeight);
+        return avgWeightLetter;
     }
 
     public static String averageProfGrade(String professorID) throws IOException {
@@ -295,5 +306,16 @@ public class Functionality {
             clean = clean.replace(" ", "%20");
         }
         return clean;
+    }
+
+    public static void main(String[] args) throws IOException {
+//        jsoupConnection = Jsoup.connect("https://google.com");
+//      System.out.println(getProfessorWouldTakeAgain("517854"));
+//       System.out.println(getProfessorDifficulty("517854"));
+//        System.out.println(getSentiments("Professor Shelton is extremely knowledgeable, supportive, and accessible outside classroom. He is humble and patient. His lecture notes are well-prepared and detailed (good sources for exam crib sheet). He explains concepts in depth and his lecture contents are very rich. He is willing to help students on homework, myRio, and test preparations."));
+//        System.out.println(getSentiments("Has exam cutoffs that lock out anyone at a B. Very weird lecturing style " +
+//                        "and exams that tests contents that aren't practiced during homework. Avoid if you care about your gpa."));
+//        System.out.println(getSentiments("Prof Bouwer is phenomenal so passionate about material and topics you will cover! i will say this course (FREN360) is heavy on READING and writing so keep that in mind, you will also get called on so stay prepared! tough grader so do the extra credit, she is understanding if you communicate, attendance is important to keep up. find a friend."));
+//        System.out.println(getSentiments("She is beyond the best professor I have had so far. She is great, always there to help you and will make sure you understand. She is open-minded and let you have an opinion! Her classes were fun, I was always excited to go. we had 1 midterm and a research paper at the end. Attendance is mandatory by the way."));
     }
 }
