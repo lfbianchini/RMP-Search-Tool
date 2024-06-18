@@ -16,26 +16,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.ProfessorPromptControllerPrimary">
    <children>
-      <AnchorPane layoutX="48.0" layoutY="42.0" prefHeight="284.0" prefWidth="552.0" style="-fx-background-color: #F2F3F4;">
-         <children>
-            <TextField fx:id="professorTextField" layoutX="99.0" layoutY="114.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
-            <Button fx:id="professorNameButton" layoutX="327.0" layoutY="114.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
-               <font>
-                  <Font name="Microsoft JhengHei UI Light" size="12.0" />
-               </font></Button>
-            <Text fx:id="help" layoutX="91.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
-               <font>
-                  <Font name="Microsoft JhengHei Light" size="12.0" />
-               </font>
-            </Text>
-            <Text layoutX="126.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" wrappingWidth="301.0">
-               <font>
-                  <Font name="Microsoft JhengHei UI Light" size="30.0" />
-               </font>
-            </Text>
-            <ProgressIndicator fx:id="professorProgress" layoutX="227.0" layoutY="185.0" opacity="0.0" progress="0.0" />
-         </children>
-      </AnchorPane>
+      <Text fx:id="help" layoutX="150.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFESSOR NAME" textAlignment="CENTER" wrappingWidth="300.0">
+         <font>
+            <Font name="Microsoft JhengHei Light" size="12.0" />
+         </font>
+      </Text>
+      <ProgressIndicator fx:id="professorProgress" layoutX="275.0" layoutY="219.0" opacity="0.0" progress="0.0" />
+      <Button fx:id="professorNameButton" layoutX="368.0" layoutY="157.0" mnemonicParsing="false" onAction="#professorNameSubmitClicked" prefHeight="38.0" prefWidth="69.0" text="SUBMIT">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="12.0" />
+         </font>
+      </Button>
+      <Text layoutX="183.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" textOrigin="CENTER" wrappingWidth="301.0">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="30.0" />
+         </font>
+      </Text>
+      <TextField fx:id="professorTextField" layoutX="150.0" layoutY="157.0" prefHeight="38.0" prefWidth="212.0" promptText="e.g. &quot;Jane Doe&quot;" />
       <Pane prefHeight="400.0" prefWidth="54.0" style="-fx-background-color: #D4D4D4;">
          <children>
             <Circle fill="#48494b" layoutX="27.0" layoutY="117.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
