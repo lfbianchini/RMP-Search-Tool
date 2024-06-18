@@ -25,9 +25,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
-import static org.searchmasterV2.Grade.getString;
-
-
 public class Professor {
     static WebDriver driver;
     static StanfordCoreNLP pipeline;
@@ -140,13 +137,12 @@ public class Professor {
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
-    public static ArrayList<String> getProfessorReviews(String professorID) throws IOException {
+    public static ArrayList<Review> getProfessorReviews(String professorID) throws IOException {
         Elements reviewList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
-        ArrayList<String> reviews = new ArrayList<>();
+        ArrayList<Review> reviews = new ArrayList<>();
         for(Element review : reviewList) {
             if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
-                reviews.add(review.select("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)").text());
-                //#ratingsList > li:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)
+                reviews.add(new Review(review));
             }
             continue;
         }
@@ -154,10 +150,10 @@ public class Professor {
     }
 
     public static long[] getAverageProfSentiments(String professorID) throws IOException {
-        ArrayList<String> professorReviews = getProfessorReviews(professorID);
+        ArrayList<Review> professorReviews = getProfessorReviews(professorID);
         sentimentList = Collections.synchronizedList(new ArrayList<>());
         professorReviews.parallelStream().map(review -> {
-            sentimentList.add(getSentiments(review));
+            sentimentList.add(getSentiments(review.getText()));
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];
@@ -176,6 +172,7 @@ public class Professor {
             .map(value -> value/professorReviews.size())
             .toArray();
     }
+
     public static void consolidateSentimentList() {
         for(List<Long> review : sentimentList) {
             review.set(1, review.get(1) + review.get(0));
@@ -300,7 +297,34 @@ public class Professor {
             }
         }
         avgWeight = avgWeight / grades.size();
-        return getString(avgWeight);
+        String avgWeightLetter = "";
+        if (avgWeight >= 3.85 && avgWeight <= 4.0) {
+            avgWeightLetter = "A";
+        } else if (avgWeight >= 3.50 && avgWeight < 3.85) {
+            avgWeightLetter = "A-";
+        } else if (avgWeight >= 3.15 && avgWeight < 3.50) {
+            avgWeightLetter = "B+";
+        } else if (avgWeight >= 2.85 && avgWeight < 3.15) {
+            avgWeightLetter = "B";
+        } else if (avgWeight >= 2.50 && avgWeight < 2.85) {
+            avgWeightLetter = "B-";
+        } else if (avgWeight >= 2.15 && avgWeight < 2.50) {
+            avgWeightLetter = "C+";
+        } else if (avgWeight >= 1.85 && avgWeight < 2.15) {
+            avgWeightLetter = "C";
+        } else if (avgWeight >= 1.50 && avgWeight < 1.85) {
+            avgWeightLetter = "C-";
+        } else if (avgWeight >= 1.15 && avgWeight < 1.50) {
+            avgWeightLetter = "D+";
+        } else if (avgWeight >= 0.85 && avgWeight < 1.15) {
+            avgWeightLetter = "D";
+        } else if (avgWeight >= 0.70 && avgWeight < 0.85) {
+            avgWeightLetter = "D-";
+        } else if (avgWeight >= 0.0 && avgWeight < 0.70) {
+            avgWeightLetter = "F";
+        }
+
+        return avgWeightLetter + ": " + String.valueOf(avgWeight);
     }
 
     public static String averageProfGrade(String professorID) throws IOException {

@@ -5,8 +5,6 @@ import org.jsoup.select.Elements;
 
 public class Metadata {
     private boolean onlineCourse;
-    private int professorRating;
-    private int professorDifficulty;
     private boolean takeAgain;
     private boolean forCredit;
     private boolean useTextbooks;

@@ -36,8 +36,8 @@ public class Loader {
         return levelOfDifficulty;
     }
 
-    public ArrayList<String> getRatings() {
-        return ratings;
+    public ArrayList<Review> getRatings() {
+        return reviewList;
     }
 
     public String getAverageProfessorGrade() {
