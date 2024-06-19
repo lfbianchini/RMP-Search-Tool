@@ -18,9 +18,10 @@ public class Loader {
         this.professorRating = Professor.getProfessorRating(professorID);
         this.wouldTakeAgain = Professor.getProfessorWouldTakeAgain(professorID);
         this.levelOfDifficulty = Professor.getProfessorDifficulty(professorID);
-        this.reviewList = Professor.getProfessorReviews(professorID);
+        Professor.getProfessorReviews(professorID);
+        this.reviewList = Professor.reviewList;
         this.averageProfessorGrade = Professor.averageProfGrade(professorID);
-        this.averageProfessorSentiments = Professor.getAverageProfSentiments(professorID);
+        this.averageProfessorSentiments = Professor.getAverageProfessorSentiments(professorID);
         //this.getSentiments = Functionality.getSentiments(professorID);
     }
 

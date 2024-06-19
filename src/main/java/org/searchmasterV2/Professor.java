@@ -1,6 +1,7 @@
 package org.searchmasterV2;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
@@ -31,6 +32,7 @@ public class Professor {
     static Document loadedPage;
     static Connection jsoupConnection;
     static List<List<Long>> sentimentList;
+    static ArrayList<Review> reviewList;
     static {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -137,21 +139,21 @@ public class Professor {
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
-    public static ArrayList<Review> getProfessorReviews(String professorID) throws IOException {
-        Elements reviewList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
+    public static void getProfessorReviews(String professorID) throws IOException {
+        Elements reviewListRaw = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<Review> reviews = new ArrayList<>();
-        for(Element review : reviewList) {
+        for(Element review : reviewListRaw) {
             if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
                 reviews.add(new Review(review));
             }
         }
-        return reviews;
+        reviewList = reviews;
     }
 
-    public static long[] getAverageProfSentiments(String professorID) throws IOException {
-        ArrayList<Review> professorReviews = getProfessorReviews(professorID);
+    public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
+        getProfessorReviews(professorID);
         sentimentList = Collections.synchronizedList(new ArrayList<>());
-        professorReviews.parallelStream().map(review -> {
+        reviewList.parallelStream().map(review -> {
             sentimentList.add(getSentiments(review.getText()));
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
@@ -168,7 +170,7 @@ public class Professor {
             count++;
         }
         return Arrays.stream(avgArr)
-            .map(value -> value/professorReviews.size())
+            .map(value -> value/reviewList.size())
             .toArray();
     }
 
@@ -230,30 +232,39 @@ public class Professor {
         return clean;
     }
 
-    public static ArrayList<Element> getMetadata(String professorID) throws IOException {
-        Elements classList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
-        ArrayList<Element> metadata = new ArrayList<>();
-        for(Element classElement : classList) {
-            if (!Objects.requireNonNull(classElement.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
-                Elements reviewMeta = Objects.requireNonNull(classElement.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children();
-                metadata.addAll(reviewMeta);
-            }
-        }
-        return metadata;
-    }
+//    public static ArrayList<Element> getMetadata(String professorID) throws IOException {
+//        Elements classList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
+//        ArrayList<Element> metadata = new ArrayList<>();
+//        for(Element classElement : classList) {
+//            if (!Objects.requireNonNull(classElement.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
+//                Elements reviewMeta = Objects.requireNonNull(classElement.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children();
+//                metadata.addAll(reviewMeta);
+//            }
+//        }
+//        return metadata;
+//    }
 
-    public static ArrayList<String> getGrades(ArrayList<Element> metadata) {
+    public static ArrayList<String> getGrades() {
         ArrayList<String> grades = new ArrayList<>();
-        for (Element meta: metadata) {
-            if (meta.text().contains("Grade: ") && !meta.text().contains("Not sure yet")) {
-                grades.add(meta.text().substring(7));
-            }
+        for (Review review: reviewList) {
+            grades.add(review.getMetadata().getGrade());
         }
         return grades;
     }
 
+    private static ArrayList<String> filterGrades(ArrayList<String> grades) {
+        ArrayList<String> filteredGrades = new ArrayList<>();
+        for (String grade: grades) {
+            if(grade.length() > 2) {
+                filteredGrades.add(grade);
+            }
+        }
+        return filteredGrades;
+    }
+
     public static String averageGrade(ArrayList<String> grades) {
         double avgWeight = 0;
+        grades = filterGrades(grades);
         for (String grade: grades) {
             switch (grade) {
                 case "A+":
@@ -327,23 +338,11 @@ public class Professor {
     }
 
     public static String averageProfGrade(String professorID) throws IOException {
-        return averageGrade(getGrades(getMetadata(professorID)));
+        getProfessorReviews(professorID);
+        return averageGrade(filterGrades(getGrades()));
     }
 
     public static void main(String[] args) throws IOException {
-//        jsoupConnection = Jsoup.connect("https://google.com");
-//      System.out.println(getProfessorWouldTakeAgain("517854"));
-//       System.out.println(getProfessorDifficulty("517854"));
-//        System.out.println(getSentiments("Professor Shelton is extremely knowledgeable, supportive, and accessible outside classroom. He is humble and patient. His lecture notes are well-prepared and detailed (good sources for exam crib sheet). He explains concepts in depth and his lecture contents are very rich. He is willing to help students on homework, myRio, and test preparations."));
-//        System.out.println(getSentiments("Has exam cutoffs that lock out anyone at a B. Very weird lecturing style " +
-//                        "and exams that tests contents that aren't practiced during homework. Avoid if you care about your gpa."));
-//        System.out.println(getSentiments("Prof Bouwer is phenomenal so passionate about material and topics you will cover! i will say this course (FREN360) is heavy on READING and writing so keep that in mind, you will also get called on so stay prepared! tough grader so do the extra credit, she is understanding if you communicate, attendance is important to keep up. find a friend."));
-//        System.out.println(getSentiments("She is beyond the best professor I have had so far. She is great, always there to help you and will make sure you understand. She is open-minded and let you have an opinion! Her classes were fun, I was always excited to go. we had 1 midterm and a research paper at the end. Attendance is mandatory by the way."));
-//        List<List<Long>> list = new ArrayList<>();
-//        list.add(new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L)));
-//        list.add(new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L)));
-//        list.add(new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L)));
-//        sentimentList = list;
-//        System.out.println(getSentimentListFrequency());
+
     }
 }
