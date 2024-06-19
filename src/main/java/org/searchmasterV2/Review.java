@@ -3,12 +3,14 @@ package org.searchmasterV2;
 import org.jsoup.nodes.Element;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class Review {
     private String text;
     private LocalDate date;
     private Metadata metadata;
+    private List<Long> sentiment;
 
     public Review(Element review) {
         if (!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
@@ -19,6 +21,7 @@ public class Review {
             this.metadata = new Metadata(Objects.requireNonNull(review.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children());
         }
     }
+
 
     public String getText() {
         return this.text;
