@@ -1,8 +1,8 @@
 package org.searchmasterV2;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
+
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.*;
@@ -28,6 +28,7 @@ public class Professor {
     static Connection jsoupConnection;
     static List<List<Long>> sentimentList;
     static ArrayList<Review> reviewList;
+
     static {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -47,7 +48,7 @@ public class Professor {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
         driver.get("https://www.ratemyprofessors.com/professor/" + professorID);
-        Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
+        Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true", ".ratemyprofessors.com", "/", null, true, false, "None");
         driver.manage().addCookie(cookie2);
         driver.get("https://www.ratemyprofessors.com/professor/" + professorID);
 
@@ -98,7 +99,7 @@ public class Professor {
         String clean = formatNameForQuery(name);
         String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean;
         driver.get(query);
-        Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true",".ratemyprofessors.com", "/", null, true, false, "None");
+        Cookie cookie2 = new Cookie("ccpa-notice-viewed-02", "true", ".ratemyprofessors.com", "/", null, true, false, "None");
         driver.manage().addCookie(cookie2);
         driver.get(query);
         driver.manage().window().minimize();
@@ -137,8 +138,8 @@ public class Professor {
     public static void getProfessorReviews(String professorID) throws IOException {
         Elements reviewListRaw = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<Review> reviews = new ArrayList<>();
-        for(Element review : reviewListRaw) {
-            if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
+        for (Element review : reviewListRaw) {
+            if (!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
                 reviews.add(new Review(review));
             }
         }
@@ -155,8 +156,8 @@ public class Professor {
         long[] avgArr = new long[5];
         int arrIndex = 0;
         int count = 1;
-        for(List<Long> review : sentimentList) {
-            for(Long reviewScore : review) {
+        for (List<Long> review : sentimentList) {
+            for (Long reviewScore : review) {
                 avgArr[arrIndex] += reviewScore;
                 arrIndex++;
             }
@@ -165,12 +166,12 @@ public class Professor {
             count++;
         }
         return Arrays.stream(avgArr)
-                .map(value -> value/reviewList.size())
+                .map(value -> value / reviewList.size())
                 .toArray();
     }
 
     public static void consolidateSentimentList() {
-        for(List<Long> review : sentimentList) {
+        for (List<Long> review : sentimentList) {
             review.set(1, review.get(1) + review.get(0));
             review.set(3, review.get(3) + review.get(4));
             review.remove(0);
@@ -181,13 +182,13 @@ public class Professor {
     public static List<Long> getSentimentListFrequency() {
         consolidateSentimentList();
         List<Long> frequencyList = Arrays.asList(0L, 0L, 0L);
-        for(List<Long> review : sentimentList) {
+        for (List<Long> review : sentimentList) {
             Long max = Collections.max(review);
-            if(review.indexOf(max) == 0) {
+            if (review.indexOf(max) == 0) {
                 frequencyList.set(0, frequencyList.get(0) + 1);
-            } else if(review.indexOf(max) == 1) {
+            } else if (review.indexOf(max) == 1) {
                 frequencyList.set(1, frequencyList.get(1) + 1);
-            } else if(review.indexOf(max) == 2) {
+            } else if (review.indexOf(max) == 2) {
                 frequencyList.set(2, frequencyList.get(2) + 1);
             }
         }
@@ -203,45 +204,33 @@ public class Professor {
         Tree tree = null;
         SimpleMatrix sm = null;
         Iterator<CoreMap> sentenceIterator = sentences.iterator();
-        for(int i=0; i<length; i++) {
+        for (int i = 0; i < length; i++) {
             CoreMap sentence = sentenceIterator.next();
             tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
             sm = RNNCoreAnnotations.getPredictions(tree);
-            for(int j=0; j<5; j++) {
+            for (int j = 0; j < 5; j++) {
                 sentiments[i][j] = Math.round(sm.get(j) * 100d);
                 avgSentiments[j] += sentiments[i][j];
             }
         }
         List<Long> avgSentimentsList = new ArrayList<>();
         for (long sentiment : avgSentiments) {
-            avgSentimentsList.add(sentiment/length);
+            avgSentimentsList.add(sentiment / length);
         }
         return avgSentimentsList;
     }
 
     public static String formatNameForQuery(String name) {
         String clean = name.trim().replaceAll(" +", " ");
-        if(clean.contains(" ")) {
+        if (clean.contains(" ")) {
             clean = clean.replace(" ", "%20");
         }
         return clean;
     }
 
-//    public static ArrayList<Element> getMetadata(String professorID) throws IOException {
-//        Elements classList = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
-//        ArrayList<Element> metadata = new ArrayList<>();
-//        for(Element classElement : classList) {
-//            if (!Objects.requireNonNull(classElement.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
-//                Elements reviewMeta = Objects.requireNonNull(classElement.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children();
-//                metadata.addAll(reviewMeta);
-//            }
-//        }
-//        return metadata;
-//    }
-
     public static ArrayList<String> getGrades() {
         ArrayList<String> grades = new ArrayList<>();
-        for (Review review: reviewList) {
+        for (Review review : reviewList) {
             grades.add(review.getMetadata().getGrade());
         }
         return grades;
@@ -249,12 +238,12 @@ public class Professor {
 
     private static ArrayList<String> filterGrades(ArrayList<String> grades) {
         ArrayList<String> filteredGrades = new ArrayList<>();
-        for (String grade: grades) {
+        for (String grade : grades) {
             try {
                 if (grade.length() <= 2) {
                     filteredGrades.add(grade);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 continue;
             }
         }
@@ -264,7 +253,7 @@ public class Professor {
     public static String averageGrade(ArrayList<String> grades) {
         double avgWeight = 0;
         grades = filterGrades(grades);
-        for (String grade: grades) {
+        for (String grade : grades) {
             switch (grade) {
                 case "A+":
                 case "A":

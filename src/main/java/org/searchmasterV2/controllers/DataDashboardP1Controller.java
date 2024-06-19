@@ -3,11 +3,8 @@ package org.searchmasterV2.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.text.Text;
+
 import java.io.IOException;
 
 import static org.searchmasterV2.App.loadFXML;
@@ -15,7 +12,7 @@ import static org.searchmasterV2.App.stage;
 import static org.searchmasterV2.controllers.DataTransitionController.data;
 import static org.searchmasterV2.controllers.ProfessorPromptControllerPrimary.professorName;
 
-public class DataDashboardController {
+public class DataDashboardP1Controller {
 
     @FXML
     private Text professorNameText;
@@ -32,7 +29,6 @@ public class DataDashboardController {
     @FXML
     private Text difficultyText;
 
-
     @FXML
     public void initialize() throws IOException {
         if (stage.getTitle().equals("SMV1.0")) {
@@ -44,14 +40,12 @@ public class DataDashboardController {
         }
     }
 
-
     @FXML
     public void pageTwoClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
         stage.setScene(new Scene(loadFXML("searchmasterDataDashP2")));
 
     }
-
 
     @FXML
     public void backButton2Clicked(ActionEvent event) throws IOException {

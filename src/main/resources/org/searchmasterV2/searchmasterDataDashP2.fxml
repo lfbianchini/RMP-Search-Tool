@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -12,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.barChartOneController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.DataDashboardP2Controller">
    <children>
       <Button layoutX="552.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageThreeClicked" prefHeight="25.0" prefWidth="25.0" />
       <Line endX="100.0" layoutX="471.0" layoutY="197.0" rotate="30.0" startX="90.0" translateX="-1.0" translateY="1.5" />
@@ -20,7 +15,7 @@
       <Button layoutX="23.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageOneClicked" prefHeight="25.0" prefWidth="25.0" />
       <Line endX="100.0" layoutX="-63.0" layoutY="203.0" rotate="30.0" startX="90.0" translateX="3.2" />
       <Line endX="100.0" layoutX="-63.0" layoutY="198.0" rotate="-30.0" startX="90.0" translateX="3.2" />
-      <BarChart fx:id="barChartOne" layoutX="106.0" layoutY="64.0" prefHeight="273.0" prefWidth="388.0">
+      <BarChart fx:id="barChartOne" layoutX="87.0" layoutY="61.0" prefHeight="305.0" prefWidth="426.0" style="-fx-bar-fill: red;" verticalGridLinesVisible="false">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

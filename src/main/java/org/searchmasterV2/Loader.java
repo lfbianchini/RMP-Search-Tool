@@ -10,7 +10,7 @@ public class Loader {
     private final String levelOfDifficulty;
     private final ArrayList<Review> reviewList;
     private final String averageProfessorGrade;
-    private final long[] averageProfessorSentiments;
+    private static long[] averageProfessorSentiments = new long[0];
     private static List<Long> consolidatedAvgProfessorSentiments = List.of();
     private long[] getSentiments;
 
@@ -22,11 +22,14 @@ public class Loader {
         Professor.getProfessorReviews(professorID);
         this.reviewList = Professor.reviewList;
         this.averageProfessorGrade = Professor.averageProfGrade(professorID);
-        this.averageProfessorSentiments = Professor.getAverageProfessorSentiments(professorID);
+        averageProfessorSentiments = Professor.getAverageProfessorSentiments(professorID);
         consolidatedAvgProfessorSentiments = Professor.getSentimentListFrequency();
         //this.getSentiments = Functionality.getSentiments(professorID);
     }
-    public static List<Long> getConsolidatedAvgProfessorSentiments() { return consolidatedAvgProfessorSentiments; }
+
+    public static List<Long> getConsolidatedAvgProfessorSentiments() {
+        return consolidatedAvgProfessorSentiments;
+    }
 
     public String getProfessorRating() {
         return professorRating;
@@ -48,7 +51,7 @@ public class Loader {
         return averageProfessorGrade;
     }
 
-    public long[] getAverageProfessorSentiments() {
+    public static long[] getAverageProfessorSentiments() {
         return averageProfessorSentiments;
     }
 
