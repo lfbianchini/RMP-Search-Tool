@@ -11,6 +11,7 @@ public class Loader {
     private final ArrayList<Review> reviewList;
     private final String averageProfessorGrade;
     private static long[] averageProfessorSentiments = new long[0];
+    private static Map<List<Long>, String> consolidatedSentiments = new HashMap<>();
     private static List<Long> consolidatedAvgProfessorSentiments = List.of();
     private long[] getSentiments;
 
@@ -24,7 +25,7 @@ public class Loader {
         this.averageProfessorGrade = Professor.averageProfGrade(professorID);
         averageProfessorSentiments = Professor.getAverageProfessorSentiments(professorID);
         consolidatedAvgProfessorSentiments = Professor.getSentimentListFrequency();
-        //this.getSentiments = Functionality.getSentiments(professorID);
+        consolidatedSentiments = Professor.consolidateSentimentList();
     }
 
     public static List<Long> getConsolidatedAvgProfessorSentiments() {
@@ -58,5 +59,7 @@ public class Loader {
     public long[] getGetSentiments() {
         return getSentiments;
     }
+
+    public static Map<List<Long>, String> getConsolidatedSentiments() { return consolidatedSentiments; }
 
 }

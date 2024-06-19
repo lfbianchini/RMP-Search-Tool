@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
+import org.searchmasterV2.Loader;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,23 +18,22 @@ import java.util.ResourceBundle;
 
 import static org.searchmasterV2.App.loadFXML;
 import static org.searchmasterV2.App.stage;
-import static org.searchmasterV2.Professor.sentimentList;
 
 public class DataDashboardP4Controller implements Initializable {
 
     @FXML
-    private ScatterChart<Number, String> scatterChartOne;
+    private ScatterChart<String, String> scatterChartOne;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        XYChart.Series<Number, String> series1 = new XYChart.Series<>();
-        Map<List<Long>, String> map = sentimentList;
+        XYChart.Series<String, String> series1 = new XYChart.Series<>();
+        Map<List<Long>, String> map = Loader.getConsolidatedSentiments();
         for(Map.Entry<List<Long>, String> entry : map.entrySet()){
             if(entry.getValue() == null || entry.getValue().length() > 2) {
                 continue;
             }
             Long max = Collections.max(entry.getKey());
-            int indexOfMax = entry.getKey().indexOf(max);
+            String indexOfMax = String.valueOf(entry.getKey().indexOf(max));
             series1.getData().add(new XYChart.Data<>(indexOfMax, entry.getValue()));
         }
         scatterChartOne.getData().addAll(series1);

@@ -24,11 +24,13 @@ public class DataDashboardP3Controller implements Initializable {
 
         pieChartOne.setTitle("SENTIMENT TOWARDS PROFESSOR (%)");
 
-        PieChart.Data negative = new PieChart.Data("Negative", sentiments[0]);
-        PieChart.Data neutral = new PieChart.Data("Neutral", sentiments[1]);
-        PieChart.Data positive = new PieChart.Data("Positive", sentiments[2]);
+        PieChart.Data veryNegative = new PieChart.Data("Very Negative", sentiments[0]);
+        PieChart.Data negative = new PieChart.Data("Negative", sentiments[1]);
+        PieChart.Data neutral = new PieChart.Data("Neutral", sentiments[2]);
+        PieChart.Data positive = new PieChart.Data("Positive", sentiments[3]);
+        PieChart.Data veryPositive = new PieChart.Data("Very Positive", sentiments[4]);
 
-        pieChartOne.getData().addAll(negative, neutral, positive);
+        pieChartOne.getData().addAll(veryNegative, negative, neutral, positive, veryPositive);
 
         pieChartOne.setLegendVisible(true);
         pieChartOne.setLabelsVisible(true);
