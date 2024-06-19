@@ -11,7 +11,8 @@ public class Review {
 
     public Review(Element review) {
         if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
-            this.text = review.text();
+            this.text = Objects.requireNonNull(review.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)")).text();
+            System.out.println(this.text);
             this.date = dateHelper(Objects.requireNonNull(review.select("div:nth-child(1) > div:nth-child(1) > " +
                     "div:nth-child(3) > div:nth-child(1) > div:nth-child(2)").text()));
             this.metadata = new Metadata(Objects.requireNonNull(review.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children());
@@ -31,9 +32,12 @@ public class Review {
     }
 
     private static LocalDate dateHelper(String datePlainText) {
-        String month = datePlainText.substring(0,3).toLowerCase();
-        int monthInt = 0;
-        switch(month) {
+        String[] parts = datePlainText.split("\\s+");
+
+        String month = parts[0].substring(0, 3).toLowerCase();
+        int monthInt;
+
+        switch (month) {
             case "jan":
                 monthInt = 1;
                 break;
@@ -70,15 +74,15 @@ public class Review {
             case "dec":
                 monthInt = 12;
                 break;
+            default:
+                monthInt = 1;
+                break;
         }
-        String day;
-        try {
-            day = datePlainText.substring(4, datePlainText.indexOf("t"));
-        } catch(StringIndexOutOfBoundsException e) {
-            day = datePlainText.substring(4, datePlainText.indexOf("n"));
-        }
-        String year = datePlainText.substring(datePlainText.indexOf(',')+2);
-        LocalDate date = LocalDate.of(Integer.parseInt(year), monthInt, Integer.parseInt(day));
-        return date;
+        String day = parts[1].replaceAll("[^\\d]", "");
+        String year = parts[2];
+
+        return LocalDate.of(Integer.parseInt(year), monthInt, Integer.parseInt(day));
     }
+
+
 }

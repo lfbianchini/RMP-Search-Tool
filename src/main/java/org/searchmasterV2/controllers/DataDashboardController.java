@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.text.Text;
 import java.io.IOException;
 
@@ -29,8 +32,6 @@ public class DataDashboardController {
     @FXML
     private Text difficultyText;
 
-    //@FXML
-    //private BarChart barChartOne;
 
     @FXML
     public void initialize() throws IOException {
@@ -43,24 +44,14 @@ public class DataDashboardController {
         }
     }
 
-    @FXML
-    public void pageOneClicked(ActionEvent event) throws IOException {
-        stage.setTitle("SMV1.0");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDash")));
-    }
 
     @FXML
     public void pageTwoClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
         stage.setScene(new Scene(loadFXML("searchmasterDataDashP2")));
-        //barChartOne.setTitle("Average Professor Sentiments Over All Reviews");
+
     }
 
-    @FXML
-    public void pageThreeClicked(ActionEvent event) throws IOException {
-        stage.setTitle("SMV1.0 ");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP3")));
-    }
 
     @FXML
     public void backButton2Clicked(ActionEvent event) throws IOException {

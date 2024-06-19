@@ -11,6 +11,7 @@ public class Loader {
     private final ArrayList<Review> reviewList;
     private final String averageProfessorGrade;
     private final long[] averageProfessorSentiments;
+    private static List<Long> consolidatedAvgProfessorSentiments = List.of();
     private long[] getSentiments;
 
     public Loader(String professorID) throws IOException {
@@ -22,8 +23,10 @@ public class Loader {
         this.reviewList = Professor.reviewList;
         this.averageProfessorGrade = Professor.averageProfGrade(professorID);
         this.averageProfessorSentiments = Professor.getAverageProfessorSentiments(professorID);
+        consolidatedAvgProfessorSentiments = Professor.getSentimentListFrequency();
         //this.getSentiments = Functionality.getSentiments(professorID);
     }
+    public static List<Long> getConsolidatedAvgProfessorSentiments() { return consolidatedAvgProfessorSentiments; }
 
     public String getProfessorRating() {
         return professorRating;
