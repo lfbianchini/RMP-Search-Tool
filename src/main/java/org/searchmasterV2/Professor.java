@@ -170,8 +170,8 @@ public class Professor {
             count++;
         }
         return Arrays.stream(avgArr)
-            .map(value -> value/reviewList.size())
-            .toArray();
+                .map(value -> value/reviewList.size())
+                .toArray();
     }
 
     public static void consolidateSentimentList() {
@@ -255,8 +255,12 @@ public class Professor {
     private static ArrayList<String> filterGrades(ArrayList<String> grades) {
         ArrayList<String> filteredGrades = new ArrayList<>();
         for (String grade: grades) {
-            if(grade.length() > 2) {
-                filteredGrades.add(grade);
+            try {
+                if (grade.length() <= 2) {
+                    filteredGrades.add(grade);
+                }
+            } catch(Exception e) {
+                continue;
             }
         }
         return filteredGrades;
