@@ -42,7 +42,7 @@ public class DataDashboardP1Controller {
 
     @FXML
     public void pageTwoClicked(ActionEvent event) throws IOException {
-        stage.setTitle("SMV1.0 ");
+        stage.setTitle("SMV1.0");
         stage.setScene(new Scene(loadFXML("searchmasterDataDashP2")));
 
     }
