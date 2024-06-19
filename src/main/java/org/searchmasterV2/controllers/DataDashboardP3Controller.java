@@ -1,21 +1,10 @@
 package org.searchmasterV2.controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.util.Duration;
+import javafx.scene.chart.*;
 import org.searchmasterV2.Loader;
 
 import java.io.IOException;
@@ -27,60 +16,28 @@ import static org.searchmasterV2.App.stage;
 
 public class DataDashboardP3Controller implements Initializable {
     @FXML
-    private BarChart<String, Number> barChartTwo;
+    private PieChart pieChartOne;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         long[] sentiments = Loader.getAverageProfessorSentiments();
 
-        CategoryAxis xAxis = (CategoryAxis) barChartTwo.getXAxis();
-        xAxis.setLabel("SENTIMENT");
-        xAxis.setTickLabelFont(Font.font("Arial", 14));
-        xAxis.setTickLabelFill(Color.DARKGREY);
+        pieChartOne.setTitle("SENTIMENT TOWARDS PROFESSOR (%)");
 
-        NumberAxis yAxis = (NumberAxis) barChartTwo.getYAxis();
-        yAxis.setLabel("% OF SENTIMENT");
-        yAxis.setTickLabelFont(Font.font("Arial", 14));
-        yAxis.setTickLabelFill(Color.DARKGREY);
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setUpperBound(100);
-        yAxis.setTickUnit(10);
+        PieChart.Data veryNegative = new PieChart.Data("Very Negative", sentiments[0]);
+        PieChart.Data negative = new PieChart.Data("Negative", sentiments[1]);
+        PieChart.Data neutral = new PieChart.Data("Neutral", sentiments[2]);
+        PieChart.Data positive = new PieChart.Data("Positive", sentiments[3]);
+        PieChart.Data veryPositive = new PieChart.Data("Very Positive", sentiments[4]);
 
-        barChartTwo.setTitle("SENTIMENT TOWARDS PROFESSOR (%)");
-        barChartTwo.setLegendVisible(false);
+        pieChartOne.getData().addAll(veryNegative, negative, neutral, positive, veryPositive);
 
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("SENTIMENT");
+        pieChartOne.setLegendVisible(true);
+        pieChartOne.setLabelsVisible(true);
+        pieChartOne.setLabelLineLength(10);
 
-        XYChart.Data<String, Number> veryNegative = new XYChart.Data<>("Very Negative", sentiments[0]);
-        XYChart.Data<String, Number> negative = new XYChart.Data<>("Negative", sentiments[1]);
-        XYChart.Data<String, Number> neutral = new XYChart.Data<>("Neutral", sentiments[2]);
-        XYChart.Data<String, Number> positive = new XYChart.Data<>("Positive", sentiments[3]);
-        XYChart.Data<String, Number> veryPositive = new XYChart.Data<>("Very Positive", sentiments[4]);
-
-        series1.getData().add(veryNegative);
-        series1.getData().add(negative);
-        series1.getData().add(neutral);
-        series1.getData().add(positive);
-        series1.getData().add(veryPositive);
-
-        barChartTwo.getData().addAll(series1);
-
-        for (XYChart.Data<String, Number> data : series1.getData()) {
-            StackPane stackPane = (StackPane) data.getNode();
-            Label label = new Label(data.getYValue().toString());
-            label.setFont(Font.font("Arial", 14));
-            label.setTextFill(Color.WHITE);
-            stackPane.getChildren().add(label);
-
-            data.getNode().setScaleY(0);
-
-            Timeline timeline = new Timeline();
-            KeyValue kv = new KeyValue(data.getNode().scaleYProperty(), 1);
-            KeyFrame kf = new KeyFrame(Duration.millis(800), kv);
-            timeline.getKeyFrames().add(kf);
-            timeline.play();
+        for (PieChart.Data data : pieChartOne.getData()) {
+            data.setName(data.getName() + " (" + String.format("%.1f%%", data.getPieValue()) + ")");
         }
     }
 
@@ -88,5 +45,11 @@ public class DataDashboardP3Controller implements Initializable {
     public void pageTwoClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
         stage.setScene(new Scene(loadFXML("searchmasterDataDashP2")));
+    }
+
+    @FXML
+    public void pageFourClicked(ActionEvent event) throws IOException {
+        stage.setTitle("SMV1.0 ");
+        stage.setScene(new Scene(loadFXML("searchmasterDataDashP4")));
     }
 }

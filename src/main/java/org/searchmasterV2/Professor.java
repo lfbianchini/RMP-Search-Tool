@@ -147,7 +147,6 @@ public class Professor {
     }
 
     public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
-        getProfessorReviews(professorID);
         sentimentList = Collections.synchronizedList(new ArrayList<>());
         reviewList.parallelStream().map(review -> {
             sentimentList.add(getSentiments(review.getText()));
@@ -326,7 +325,6 @@ public class Professor {
     }
 
     public static String averageProfGrade(String professorID) throws IOException {
-        getProfessorReviews(professorID);
         return averageGrade(filterGrades(getGrades()));
     }
 
