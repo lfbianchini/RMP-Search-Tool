@@ -144,7 +144,6 @@ public class Professor {
             if(!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
                 reviews.add(new Review(review));
             }
-            continue;
         }
         return reviews;
     }
@@ -324,7 +323,7 @@ public class Professor {
             avgWeightLetter = "F";
         }
 
-        return avgWeightLetter + ": " + String.valueOf(avgWeight);
+        return avgWeightLetter;
     }
 
     public static String averageProfGrade(String professorID) throws IOException {
@@ -347,5 +346,4 @@ public class Professor {
 //        sentimentList = list;
 //        System.out.println(getSentimentListFrequency());
     }
-
 }
