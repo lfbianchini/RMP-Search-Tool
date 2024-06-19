@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import org.searchmasterV2.Functionality;
+import org.searchmasterV2.Professor;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -34,6 +34,7 @@ public class ProfessorPromptControllerPrimary {
 
     private static HashMap<String, String> professorMap;
     public static String professorID;
+    public static String professorName;
     private boolean isLoading = false;
     private static boolean isFirst = true;
 
@@ -57,7 +58,7 @@ public class ProfessorPromptControllerPrimary {
             Task<HashMap<String, String>> task = new Task<HashMap<String, String>>() {
                 @Override
                 protected HashMap<String, String> call() throws Exception {
-                    HashMap<String, String> map = Functionality.getProfessorId(universityID, professorTextField.getText());
+                    HashMap<String, String> map = Professor.getProfessorId(universityID, professorTextField.getText());
                     if(map.isEmpty()) {
                         throw new Exception();
                     }
@@ -128,6 +129,7 @@ public class ProfessorPromptControllerPrimary {
         for (String str : professorMap.keySet()) {
             MenuItem menuItem = new MenuItem(str);
             menuItem.setOnAction(actionEvent -> {
+                professorName = str;
                 professorID = professorMap.get(str);
                 try {
                     stage.setScene(new Scene(loadFXML("searchMasterDataTransition")));

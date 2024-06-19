@@ -41,7 +41,7 @@ public class DataTransitionController {
             @Override
             protected void succeeded() {
                 try {
-                    stage.setScene(new Scene(loadFXML("searchmasterDataDash")));
+                    stage.setScene(new Scene(loadFXML("searchmasterDataDashP1")));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

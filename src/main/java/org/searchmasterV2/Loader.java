@@ -5,46 +5,53 @@ import java.util.*;
 
 public class Loader {
 
-    private String professorRating;
-    private String wouldTakeAgain;
-    private String levelOfDifficulty;
-    private ArrayList<String> ratings = new ArrayList<>();
-    private String averageProfessorGrade;
-    private long[] averageProfessorSentiments;
+    private final String professorRating;
+    private final String wouldTakeAgain;
+    private final String levelOfDifficulty;
+    private final ArrayList<Review> reviewList;
+    private final String averageProfessorGrade;
+    private static long[] averageProfessorSentiments = new long[0];
+    private static List<Long> consolidatedAvgProfessorSentiments = List.of();
     private long[] getSentiments;
 
     public Loader(String professorID) throws IOException {
-        Functionality.initializeDriver(professorID);
-        this.professorRating = Functionality.getProfessorRating(professorID);
-        //this.wouldTakeAgain = Functionality.getProfessorWouldTakeAgain(professorID);
-        //this.levelOfDifficulty = Functionality.getProfessorlevelOfDifficulty(professorID);
-        this.ratings = Functionality.getProfessorReviews(professorID);
-        this.averageProfessorGrade = Functionality.averageProfGrade(professorID);
-        this.averageProfessorSentiments = Functionality.getAverageProfSentiments(professorID);
+        Professor.initializeDriver(professorID);
+        this.professorRating = Professor.getProfessorRating(professorID);
+        this.wouldTakeAgain = Professor.getProfessorWouldTakeAgain(professorID);
+        this.levelOfDifficulty = Professor.getProfessorDifficulty(professorID);
+        Professor.getProfessorReviews(professorID);
+        this.reviewList = Professor.reviewList;
+        this.averageProfessorGrade = Professor.averageProfGrade(professorID);
+        averageProfessorSentiments = Professor.getAverageProfessorSentiments(professorID);
+        consolidatedAvgProfessorSentiments = Professor.getSentimentListFrequency();
         //this.getSentiments = Functionality.getSentiments(professorID);
+    }
+
+    public static List<Long> getConsolidatedAvgProfessorSentiments() {
+        return consolidatedAvgProfessorSentiments;
     }
 
     public String getProfessorRating() {
         return professorRating;
     }
 
-    /*public String getProfessorWouldTakeAgain() {
+    public String getProfessorWouldTakeAgain() {
         return wouldTakeAgain;
     }
 
-    public String getProfessorlevelOfDifficulty() {
+    public String getProfessorLevelOfDifficulty() {
         return levelOfDifficulty;
-    }*/
+    }
 
-    public ArrayList<String> getRatings() {
-        return ratings;
+    public ArrayList<Review> getRatings() {
+        return reviewList;
     }
 
     public String getAverageProfessorGrade() {
         return averageProfessorGrade;
     }
 
-    public long[] getAverageProfessorSentiments() {
+    public static long[] getAverageProfessorSentiments() {
         return averageProfessorSentiments;
     }
 

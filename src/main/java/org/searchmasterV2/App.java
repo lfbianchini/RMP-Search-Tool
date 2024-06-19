@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class App extends Application {
@@ -15,9 +16,11 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
-        scene = new Scene(loadFXML("loading_screen"));
+        scene = new Scene(loadFXML("loadingScreen"));
         stage.setScene(scene);
-        stage.setOnCloseRequest(event -> Functionality.driver.quit());
+        stage.setOnCloseRequest(event -> Professor.driver.quit());
+        stage.setTitle("SMV1.0");
+        stage.setResizable(false);
         stage.show();
     }
 
