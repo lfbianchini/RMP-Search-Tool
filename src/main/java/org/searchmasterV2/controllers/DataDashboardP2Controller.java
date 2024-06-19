@@ -4,7 +4,6 @@ import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -58,14 +57,6 @@ public class DataDashboardP2Controller implements Initializable {
         series1.getData().add(positive);
 
         barChartOne.getData().addAll(series1);
-
-        //Not changing color properly
-        negative.nodeProperty().addListener((observable, oldValue, newValue) ->
-                newValue.setStyle("-fx-bar-fill: red;"));
-        neutral.nodeProperty().addListener((observable, oldValue, newValue) ->
-                newValue.setStyle("-fx-bar-fill: gray;"));
-        positive.nodeProperty().addListener((observable, oldValue, newValue) ->
-                newValue.setStyle("-fx-bar-fill: green;"));
 
         //Not animating bottom to top
         for (XYChart.Data<String, Number> data : series1.getData()) {
