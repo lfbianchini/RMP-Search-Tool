@@ -56,7 +56,7 @@ public class Loader {
         return averageProfessorSentiments;
     }
 
-    public long[] getGetSentiments() {
+    public long[] getSentiments() {
         return getSentiments;
     }
 
