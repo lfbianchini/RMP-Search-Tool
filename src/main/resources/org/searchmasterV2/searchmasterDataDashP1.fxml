@@ -59,29 +59,29 @@
          </font>
       </Text>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="60.0" layoutX="389.0" layoutY="290.0" scaleX="0.9" scaleY="0.9" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-      <Text fx:id="ratingText" layoutX="392.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+      <Text fx:id="difficultyText" layoutX="392.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
          <font>
-            <Font name="Microsoft YaHei UI" size="20.0" />
-         </font>
-      </Text>
-      <Text fx:id="wouldTakeAgainText" layoutX="392.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
-         <font>
-            <Font name="Microsoft YaHei UI" size="18.0" />
-         </font>
-      </Text>
-      <Text fx:id="averageGradeText" layoutX="392.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
-         <font>
-            <Font name="Microsoft YaHei UI" size="20.0" />
-         </font>
-      </Text>
-      <Text fx:id="difficultyText" layoutX="392.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
-         <font>
-            <Font name="Microsoft JhengHei UI" size="20.0" />
+            <Font name="Microsoft JhengHei UI Light" size="18.0" />
          </font>
       </Text>
       <Text fx:id="professorNameText" layoutX="115.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="416.20703125">
          <font>
             <Font name="Segoe UI Semibold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="ratingText" layoutX="392.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="averageGradeText" layoutX="392.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="wouldTakeAgainText" layoutX="392.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="18.0" />
          </font>
       </Text>
    </children>

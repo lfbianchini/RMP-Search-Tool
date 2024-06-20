@@ -33,10 +33,10 @@ public class DataDashboardP1Controller {
     public void initialize() throws IOException {
         if (stage.getTitle().equals("SMV1.0")) {
             professorNameText.setText(professorName.toUpperCase());
-            ratingText.setText(data.getProfessorRating());
+            ratingText.setText(data.getProfessorRating() + "/5");
             wouldTakeAgainText.setText(data.getProfessorWouldTakeAgain());
             averageGradeText.setText(data.getAverageProfessorGrade());
-            difficultyText.setText(data.getProfessorLevelOfDifficulty());
+            difficultyText.setText(data.getProfessorLevelOfDifficulty() + "/5");
         }
     }
 
