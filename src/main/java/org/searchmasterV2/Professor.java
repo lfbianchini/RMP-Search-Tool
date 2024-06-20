@@ -150,7 +150,9 @@ public class Professor {
     public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
         sentimentList = Collections.synchronizedMap(new HashMap<>());
         reviewList.parallelStream().map(review -> {
-            sentimentList.put(getSentiments(review.getText()), review.getMetadata().getGradeAsDouble());
+            List<Long> sentiments = getSentiments(review.getText());
+            review.setSentiment(sentiments);
+            sentimentList.put(sentiments, review.getMetadata().getGradeAsDouble());
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];
@@ -172,6 +174,15 @@ public class Professor {
     }
 
     public static List<Long> consolidateReview(List<Long> review) {
+        List<Long> newReview = new ArrayList<Long>(review);
+        newReview.set(1, newReview.get(1) + newReview.get(0));
+        newReview.set(3, newReview.get(3) + newReview.get(4));
+        newReview.remove(0);
+        newReview.remove(3);
+        return newReview;
+    }
+
+    public static List<Long> consolidateReviewNonCopy(List<Long> review) {
         review.set(1, review.get(1) + review.get(0));
         review.set(3, review.get(3) + review.get(4));
         review.remove(0);
@@ -182,12 +193,13 @@ public class Professor {
     public static Map<List<Long>, Double> consolidateSentimentList() {
         Map<List<Long>, Double> sentimentListTwo = sentimentList;
         for (List<Long> review : sentimentListTwo.keySet()) {
-            consolidateReview(review);
+            consolidateReviewNonCopy(review);
         }
         return sentimentListTwo;
     }
 
     public static List<Long> getSentimentListFrequency() {
+        consolidateSentimentList();
         List<Long> frequencyList = Arrays.asList(0L, 0L, 0L);
         for (List<Long> review : sentimentList.keySet()) {
             Long max = Collections.max(review);

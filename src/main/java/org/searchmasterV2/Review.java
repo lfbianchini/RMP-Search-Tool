@@ -23,6 +23,7 @@ public class Review {
         }
     }
 
+
     public String getText() {
         return this.text;
     }
@@ -91,13 +92,5 @@ public class Review {
     public void setSentiment(List<Long> sentiment) {
         this.sentiment = sentiment;
         this.consolidatedSentiment = Professor.consolidateReview(sentiment);
-    }
-
-    public List<Long> getSentiment() {
-        return this.sentiment;
-    }
-
-    public List<Long> getConsolidatedSentiment() {
-        return this.getConsolidatedSentiment();
     }
 }
