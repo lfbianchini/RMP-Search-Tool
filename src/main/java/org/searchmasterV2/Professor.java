@@ -150,7 +150,9 @@ public class Professor {
     public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
         sentimentList = Collections.synchronizedMap(new HashMap<>());
         reviewList.parallelStream().map(review -> {
-            sentimentList.put(getSentiments(review.getText()), review.getMetadata().getGrade());
+            List<Long> reviewSentiments = getSentiments(review.getText());
+            sentimentList.put(reviewSentiments, review.getMetadata().getGrade());
+            review.setSentiment(reviewSentiments);
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];

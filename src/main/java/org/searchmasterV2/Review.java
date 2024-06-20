@@ -88,5 +88,7 @@ public class Review {
         return LocalDate.of(Integer.parseInt(year), monthInt, Integer.parseInt(day));
     }
 
-
+    public void setSentiment(List<Long> sentiment) {
+        this.sentiment = sentiment;
+    }
 }
