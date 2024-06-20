@@ -22,23 +22,22 @@ import static org.searchmasterV2.App.stage;
 public class DataDashboardP4Controller implements Initializable {
 
     @FXML
-    private ScatterChart<String, String> scatterChartOne;
+    private ScatterChart<String, Double> scatterChartOne;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        XYChart.Series<String, String> series1 = new XYChart.Series<>();
-        Map<List<Long>, String> map = Loader.getConsolidatedSentiments();
-        for(Map.Entry<List<Long>, String> entry : map.entrySet()){
-            if(entry.getValue() == null || entry.getValue().length() > 2) {
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        Map<List<Long>, Double> map = Loader.getConsolidatedSentiments();
+        for (Map.Entry<List<Long>, Double> entry : map.entrySet()) {
+            if (entry.getValue() == null || entry.getValue() == 0) {
                 continue;
             }
             Long max = Collections.max(entry.getKey());
-            String indexOfMax = String.valueOf(entry.getKey().indexOf(max));
+            String indexOfMax = String.valueOf(entry.getKey().indexOf(max)); // Convert to String
             series1.getData().add(new XYChart.Data<>(indexOfMax, entry.getValue()));
         }
-        scatterChartOne.getData().addAll(series1);
+        scatterChartOne.getData().add(series1);
     }
-
     @FXML
     public void pageThreeClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");

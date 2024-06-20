@@ -77,4 +77,51 @@ public class Metadata {
     public String getGrade() {
         return grade;
     }
+
+    public double getGradeAsDouble() {
+        if(this.grade == null) {
+            return 0.0;
+        }
+        double avgWeight = 0.0;
+        switch (this.getGrade()) {
+            case "A+":
+            case "A":
+                avgWeight = 4;
+                break;
+            case "A-":
+                avgWeight = 3.7;
+                break;
+            case "B+":
+                avgWeight = 3.3;
+                break;
+            case "B":
+                avgWeight = 3;
+                break;
+            case "B-":
+                avgWeight = 2.7;
+                break;
+            case "C+":
+                avgWeight = 2.3;
+                break;
+            case "C":
+                avgWeight = 2.0;
+                break;
+            case "C-":
+                avgWeight = 1.7;
+                break;
+            case "D+":
+                avgWeight = 1.3;
+                break;
+            case "D":
+                avgWeight = 1.0;
+                break;
+            case "D-":
+                avgWeight = 0.7;
+                break;
+            case "F":
+                avgWeight = 0.0;
+                break;
+        }
+        return avgWeight;
+    }
 }

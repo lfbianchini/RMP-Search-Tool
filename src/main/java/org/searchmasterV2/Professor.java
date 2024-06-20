@@ -27,7 +27,7 @@ public class Professor {
     static StanfordCoreNLP pipeline;
     static Document loadedPage;
     static Connection jsoupConnection;
-    public static Map<List<Long>, String> sentimentList;
+    public static Map<List<Long>, Double> sentimentList;
     static ArrayList<Review> reviewList;
 
     static {
@@ -150,9 +150,7 @@ public class Professor {
     public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
         sentimentList = Collections.synchronizedMap(new HashMap<>());
         reviewList.parallelStream().map(review -> {
-            List<Long> reviewSentiments = getSentiments(review.getText());
-            sentimentList.put(reviewSentiments, review.getMetadata().getGrade());
-            review.setSentiment(reviewSentiments);
+            sentimentList.put(getSentiments(review.getText()), review.getMetadata().getGradeAsDouble());
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];
@@ -181,8 +179,8 @@ public class Professor {
         return review;
     }
 
-    public static Map<List<Long>, String> consolidateSentimentList() {
-        Map<List<Long>, String> sentimentListTwo = sentimentList;
+    public static Map<List<Long>, Double> consolidateSentimentList() {
+        Map<List<Long>, Double> sentimentListTwo = sentimentList;
         for (List<Long> review : sentimentListTwo.keySet()) {
             consolidateReview(review);
         }
