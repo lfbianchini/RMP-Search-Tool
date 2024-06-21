@@ -93,4 +93,8 @@ public class Review {
         this.sentiment = sentiment;
         this.consolidatedSentiment = Professor.consolidateReview(sentiment);
     }
+
+    public List<Long> getConsolidatedSentiment() {
+        return this.consolidatedSentiment;
+    }
 }

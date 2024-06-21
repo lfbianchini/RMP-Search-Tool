@@ -20,10 +20,10 @@ import static org.searchmasterV2.App.stage;
 public class DataDashboardP5Controller implements Initializable {
 
     @FXML
-    private LineChart<String, String> lineChart;
+    private LineChart<String, Integer> lineChart;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-   /*     XYChart.Series<String, String> series1 = new XYChart.Series<>();
+        XYChart.Series<String, Integer> series1 = new XYChart.Series<>();
         ArrayList<Review> reviews = Loader.getRatings();
         reviews.sort(Comparator.comparing(Review::getDate));
         List<String> reviewSentiments = new ArrayList<>();
@@ -35,13 +35,12 @@ public class DataDashboardP5Controller implements Initializable {
             List<Long> sentiments = r.getConsolidatedSentiment();
             if (!sentiments.isEmpty()) {
                 Long sentiment = Collections.max(sentiments);
-                String sentimentStr = sentiment.toString();
-                reviewSentiments.add(sentimentStr);
+                int sentimentStr = sentiments.indexOf(sentiment);
+//                reviewSentiments.add(sentimentStr);
                 series1.getData().add(new XYChart.Data<>(date, sentimentStr));
             }
         }
-
-        lineChart.getData().add(series1);*/
+        lineChart.getData().add(series1);
     }
 
     @FXML
