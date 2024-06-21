@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import org.searchmasterV2.Loader;
+
 import java.io.IOException;
 
 import static org.searchmasterV2.App.loadFXML;

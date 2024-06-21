@@ -79,7 +79,7 @@ public class Metadata {
     }
 
     public double getGradeAsDouble() {
-        if(this.grade == null) {
+        if (this.grade == null) {
             return 0.0;
         }
         double avgWeight = 0.0;

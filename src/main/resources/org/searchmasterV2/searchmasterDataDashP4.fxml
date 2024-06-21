@@ -12,21 +12,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.DataDashboardP4Controller">
-   <children>
-      <Button layoutX="23.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageThreeClicked" prefHeight="25.0" prefWidth="25.0" />
-      <Line endX="100.0" layoutX="-63.0" layoutY="203.0" rotate="30.0" startX="90.0" translateX="3.2" />
-      <Line endX="100.0" layoutX="-63.0" layoutY="198.0" rotate="-30.0" startX="90.0" translateX="3.2" />
-      <Button layoutX="552.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageFiveClicked" prefHeight="25.0" prefWidth="25.0" />
-      <Line endX="100.0" layoutX="471.0" layoutY="197.0" rotate="30.0" startX="90.0" translateX="-1.0" translateY="1.5" />
-      <Line endX="100.0" layoutX="471.0" layoutY="202.0" rotate="-30.0" startX="90.0" translateX="-1.0" translateY="1.5" />
-      <ScatterChart fx:id="scatterChart" layoutX="54.0" layoutY="30.0" prefHeight="341.0" prefWidth="493.0" title="Grades Against Review Sentiment">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </ScatterChart>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.searchmasterV2.controllers.DataDashboardP4Controller">
+    <children>
+        <Button layoutX="23.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageThreeClicked" prefHeight="25.0"
+                prefWidth="25.0"/>
+        <Line endX="100.0" layoutX="-63.0" layoutY="203.0" rotate="30.0" startX="90.0" translateX="3.2"/>
+        <Line endX="100.0" layoutX="-63.0" layoutY="198.0" rotate="-30.0" startX="90.0" translateX="3.2"/>
+        <Button layoutX="552.0" layoutY="188.0" mnemonicParsing="false" onAction="#pageFiveClicked" prefHeight="25.0"
+                prefWidth="25.0"/>
+        <Line endX="100.0" layoutX="471.0" layoutY="197.0" rotate="30.0" startX="90.0" translateX="-1.0"
+              translateY="1.5"/>
+        <Line endX="100.0" layoutX="471.0" layoutY="202.0" rotate="-30.0" startX="90.0" translateX="-1.0"
+              translateY="1.5"/>
+        <ScatterChart fx:id="scatterChart" layoutX="54.0" layoutY="30.0" prefHeight="341.0" prefWidth="493.0"
+                      title="Grades Against Review Sentiment">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT"/>
+            </yAxis>
+        </ScatterChart>
+    </children>
 </AnchorPane>

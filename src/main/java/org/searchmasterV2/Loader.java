@@ -60,6 +60,8 @@ public class Loader {
         return getSentiments;
     }
 
-    public static Map<List<Long>, Double> getConsolidatedSentiments() { return consolidatedSentiments; }
+    public static Map<List<Long>, Double> getConsolidatedSentiments() {
+        return consolidatedSentiments;
+    }
 
 }

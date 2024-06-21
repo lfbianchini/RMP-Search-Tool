@@ -46,6 +46,7 @@ public class DataDashboardP4Controller implements Initializable {
 
         scatterChart.getData().add(series1);
     }
+
     @FXML
     public void pageThreeClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
