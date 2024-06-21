@@ -52,12 +52,12 @@ public class DataDashboardP3Controller implements Initializable {
     @FXML
     public void pageTwoClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP2")));
+        stage.setScene(new Scene(loadFXML("DataDashP2")));
     }
 
     @FXML
     public void pageFourClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP4")));
+        stage.setScene(new Scene(loadFXML("DataDashP4")));
     }
 }

@@ -58,7 +58,6 @@ public class DataDashboardP2Controller implements Initializable {
 
         barChartOne.getData().addAll(series1);
 
-        //Not animating bottom to top
         for (XYChart.Data<String, Number> data : series1.getData()) {
             StackPane stackPane = (StackPane) data.getNode();
             Label label = new Label(data.getYValue().toString());
@@ -79,12 +78,12 @@ public class DataDashboardP2Controller implements Initializable {
     @FXML
     public void pageOneClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP1")));
+        stage.setScene(new Scene(loadFXML("DataDashP1")));
     }
 
     @FXML
     public void pageThreeClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP3")));
+        stage.setScene(new Scene(loadFXML("DataDashP3")));
     }
 }

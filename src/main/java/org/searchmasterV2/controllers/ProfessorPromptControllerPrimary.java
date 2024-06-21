@@ -70,7 +70,7 @@ public class ProfessorPromptControllerPrimary {
             task.setOnSucceeded(e -> {
                 professorMap = task.getValue();
                 try {
-                    stage.setScene(new Scene(loadFXML("searchmasterProfessorDropdown")));
+                    stage.setScene(new Scene(loadFXML("ProfessorDropdown")));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -83,7 +83,7 @@ public class ProfessorPromptControllerPrimary {
 
             task.setOnFailed(e -> {
                 try {
-                    stage.setScene(new Scene(loadFXML("searchmasterProfessorError")));
+                    stage.setScene(new Scene(loadFXML("ProfessorError")));
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -133,7 +133,7 @@ public class ProfessorPromptControllerPrimary {
                 professorName = str;
                 professorID = professorMap.get(str);
                 try {
-                    stage.setScene(new Scene(loadFXML("searchMasterDataTransition")));
+                    stage.setScene(new Scene(loadFXML("DataTransition")));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -145,6 +145,6 @@ public class ProfessorPromptControllerPrimary {
 
     @FXML
     public void backButtonClicked(ActionEvent event) throws IOException {
-        stage.setScene(new Scene(loadFXML("searchmasterDropdown")));
+        stage.setScene(new Scene(loadFXML("UniversityDropdown")));
     }
 }

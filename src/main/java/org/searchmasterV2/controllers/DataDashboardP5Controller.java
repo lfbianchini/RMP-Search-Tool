@@ -21,6 +21,6 @@ public class DataDashboardP5Controller implements Initializable {
     @FXML
     public void pageFourClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP4")));
+        stage.setScene(new Scene(loadFXML("DataDashP4")));
     }
 }

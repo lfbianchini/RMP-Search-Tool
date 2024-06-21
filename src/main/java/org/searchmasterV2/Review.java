@@ -16,7 +16,6 @@ public class Review {
     public Review(Element review) {
         if (!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
             this.text = Objects.requireNonNull(review.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3)")).text();
-            System.out.println(this.text);
             this.date = dateHelper(Objects.requireNonNull(review.select("div:nth-child(1) > div:nth-child(1) > " +
                     "div:nth-child(3) > div:nth-child(1) > div:nth-child(2)").text()));
             this.metadata = new Metadata(Objects.requireNonNull(review.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children());

@@ -1,7 +1,6 @@
 package org.searchmasterV2.controllers;
 
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,7 +41,7 @@ public class DataTransitionController {
             @Override
             protected void succeeded() {
                 try {
-                    stage.setScene(new Scene(loadFXML("searchmasterDataDashP1")));
+                    stage.setScene(new Scene(loadFXML("DataDashP1")));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -51,10 +50,5 @@ public class DataTransitionController {
         };
 
         new Thread(task).start();
-    }
-
-    @FXML
-    public void backButton2Clicked(ActionEvent event) throws IOException {
-        stage.setScene(new Scene(loadFXML("searchmasterProfessorDropdown")));
     }
 }

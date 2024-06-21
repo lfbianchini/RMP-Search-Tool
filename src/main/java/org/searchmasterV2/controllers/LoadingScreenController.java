@@ -32,7 +32,7 @@ public class LoadingScreenController implements Initializable {
                     } else {
                         timeline.stop();
                         try {
-                            stage.setScene(new Scene(loadFXML("searchmaster")));
+                            stage.setScene(new Scene(loadFXML("UniversityPrompt")));
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }

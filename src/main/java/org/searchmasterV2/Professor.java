@@ -20,7 +20,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.SourceType;
 
 public class Professor {
     static WebDriver driver;
@@ -163,11 +162,9 @@ public class Professor {
                 avgArr[arrIndex] += reviewScore;
                 arrIndex++;
             }
-            System.out.println("review " + count + " done");
             arrIndex = 0;
             count++;
         }
-        System.out.println(sentimentList.entrySet());
         return Arrays.stream(avgArr)
                 .map(value -> value / reviewList.size())
                 .toArray();

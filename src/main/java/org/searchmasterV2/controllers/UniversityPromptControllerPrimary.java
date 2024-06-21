@@ -66,7 +66,7 @@ public class UniversityPromptControllerPrimary {
                 HashMap<String, String> map = task.getValue();
                 universitySet = map;
                 try {
-                    stage.setScene(new Scene(App.loadFXML("searchmasterDropdown")));
+                    stage.setScene(new Scene(App.loadFXML("UniversityDropdown")));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -79,7 +79,7 @@ public class UniversityPromptControllerPrimary {
 
             task.setOnFailed(e -> {
                 try {
-                    stage.setScene(new Scene(App.loadFXML("searchmasterError")));
+                    stage.setScene(new Scene(App.loadFXML("UniversityError")));
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -128,7 +128,7 @@ public class UniversityPromptControllerPrimary {
             menuItem.setOnAction(actionEvent -> {
                 universityID = universitySet.get(str);
                 try {
-                    stage.setScene(new Scene(loadFXML("searchmasterProfessorPrompt")));
+                    stage.setScene(new Scene(loadFXML("ProfessorPrompt")));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
