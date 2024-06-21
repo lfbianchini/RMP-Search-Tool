@@ -9,8 +9,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import org.searchmasterV2.App;
 import org.searchmasterV2.Professor;
+
 import java.io.IOException;
 import java.util.HashMap;
+
 import static org.searchmasterV2.App.loadFXML;
 import static org.searchmasterV2.App.stage;
 
@@ -54,7 +56,7 @@ public class UniversityPromptControllerPrimary {
                 @Override
                 protected HashMap<String, String> call() throws Exception {
                     HashMap<String, String> map = Professor.getUniversityID(universityTextField.getText());
-                    if(map.isEmpty()) {
+                    if (map.isEmpty()) {
                         throw new Exception();
                     }
                     return map;

@@ -1,10 +1,12 @@
 package org.searchmasterV2.controllers;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
+import javafx.util.Duration;
 import org.searchmasterV2.Loader;
 
 import java.io.IOException;
@@ -39,6 +41,12 @@ public class DataDashboardP3Controller implements Initializable {
         for (PieChart.Data data : pieChartOne.getData()) {
             data.setName(data.getName() + " (" + String.format("%.1f%%", data.getPieValue()) + ")");
         }
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), pieChartOne);
+        pieChartOne.setOpacity(0);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
     }
 
     @FXML

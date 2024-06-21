@@ -11,19 +11,25 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.searchmasterV2.controllers.LoadingScreenController">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000008" height="200.0" layoutX="119.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="335.0" />
-      <ProgressIndicator fx:id="progressIndicator" layoutX="264.0" layoutY="200.0" prefHeight="51.0" prefWidth="45.0" progress="0.0" />
-      <Text layoutX="172.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL" textAlignment="CENTER">
-         <font>
-            <Font name="Microsoft YaHei Light" size="25.0" />
-         </font>
-      </Text>
-      <Text fx:id="progressText" layoutX="286.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.searchmasterV2.controllers.LoadingScreenController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000008" height="200.0" layoutX="119.0" layoutY="100.0"
+                   stroke="BLACK" strokeType="INSIDE" width="335.0"/>
+        <ProgressIndicator fx:id="progressIndicator" layoutX="264.0" layoutY="200.0" prefHeight="51.0" prefWidth="45.0"
+                           progress="0.0"/>
+        <Text layoutX="172.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RMP SEARCH TOOL"
+              textAlignment="CENTER">
+            <font>
+                <Font name="Microsoft YaHei Light" size="25.0"/>
+            </font>
+        </Text>
+        <Text fx:id="progressText" layoutX="286.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              textAlignment="CENTER">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Text>
+    </children>
 </AnchorPane>

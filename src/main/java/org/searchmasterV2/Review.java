@@ -3,12 +3,15 @@ package org.searchmasterV2;
 import org.jsoup.nodes.Element;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class Review {
     private String text;
     private LocalDate date;
     private Metadata metadata;
+    private List<Long> sentiment;
+    private List<Long> consolidatedSentiment;
 
     public Review(Element review) {
         if (!Objects.requireNonNull(review.selectFirst("div:nth-child(1)")).id().equals("ad-controller")) {
@@ -19,6 +22,7 @@ public class Review {
             this.metadata = new Metadata(Objects.requireNonNull(review.selectFirst("div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)")).children());
         }
     }
+
 
     public String getText() {
         return this.text;
@@ -85,5 +89,12 @@ public class Review {
         return LocalDate.of(Integer.parseInt(year), monthInt, Integer.parseInt(day));
     }
 
+    public void setSentiment(List<Long> sentiment) {
+        this.sentiment = sentiment;
+        this.consolidatedSentiment = Professor.consolidateReview(sentiment);
+    }
 
+    public List<Long> getConsolidatedSentiment() {
+        return this.consolidatedSentiment;
+    }
 }

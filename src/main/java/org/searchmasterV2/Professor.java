@@ -20,13 +20,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.SourceType;
 
 public class Professor {
     static WebDriver driver;
     static StanfordCoreNLP pipeline;
     static Document loadedPage;
     static Connection jsoupConnection;
-    static List<List<Long>> sentimentList;
+    public static Map<List<Long>, Double> sentimentList;
     static ArrayList<Review> reviewList;
 
     static {
@@ -147,15 +148,17 @@ public class Professor {
     }
 
     public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
-        sentimentList = Collections.synchronizedList(new ArrayList<>());
+        sentimentList = Collections.synchronizedMap(new HashMap<>());
         reviewList.parallelStream().map(review -> {
-            sentimentList.add(getSentiments(review.getText()));
+            List<Long> sentiments = getSentiments(review.getText());
+            review.setSentiment(sentiments);
+            sentimentList.put(sentiments, review.getMetadata().getGradeAsDouble());
             return review;
         }).forEachOrdered(review -> System.out.println("review"));
         long[] avgArr = new long[5];
         int arrIndex = 0;
         int count = 1;
-        for (List<Long> review : sentimentList) {
+        for (List<Long> review : sentimentList.keySet()) {
             for (Long reviewScore : review) {
                 avgArr[arrIndex] += reviewScore;
                 arrIndex++;
@@ -164,24 +167,41 @@ public class Professor {
             arrIndex = 0;
             count++;
         }
+        System.out.println(sentimentList.entrySet());
         return Arrays.stream(avgArr)
                 .map(value -> value / reviewList.size())
                 .toArray();
     }
 
-    public static void consolidateSentimentList() {
-        for (List<Long> review : sentimentList) {
-            review.set(1, review.get(1) + review.get(0));
-            review.set(3, review.get(3) + review.get(4));
-            review.remove(0);
-            review.remove(3);
+    public static List<Long> consolidateReview(List<Long> review) {
+        List<Long> newReview = new ArrayList<Long>(review);
+        newReview.set(1, newReview.get(1) + newReview.get(0));
+        newReview.set(3, newReview.get(3) + newReview.get(4));
+        newReview.remove(0);
+        newReview.remove(3);
+        return newReview;
+    }
+
+    public static List<Long> consolidateReviewNonCopy(List<Long> review) {
+        review.set(1, review.get(1) + review.get(0));
+        review.set(3, review.get(3) + review.get(4));
+        review.remove(0);
+        review.remove(3);
+        return review;
+    }
+
+    public static Map<List<Long>, Double> consolidateSentimentList() {
+        Map<List<Long>, Double> sentimentListTwo = sentimentList;
+        for (List<Long> review : sentimentListTwo.keySet()) {
+            consolidateReviewNonCopy(review);
         }
+        return sentimentListTwo;
     }
 
     public static List<Long> getSentimentListFrequency() {
         consolidateSentimentList();
         List<Long> frequencyList = Arrays.asList(0L, 0L, 0L);
-        for (List<Long> review : sentimentList) {
+        for (List<Long> review : sentimentList.keySet()) {
             Long max = Collections.max(review);
             if (review.indexOf(max) == 0) {
                 frequencyList.set(0, frequencyList.get(0) + 1);
