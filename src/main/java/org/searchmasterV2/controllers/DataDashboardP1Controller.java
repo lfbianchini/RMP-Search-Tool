@@ -48,12 +48,6 @@ public class DataDashboardP1Controller {
     }
 
     @FXML
-    public void backButton2Clicked(ActionEvent event) throws IOException {
-        stage.setTitle("SMV1.0");
-        stage.setScene(new Scene(loadFXML("searchmasterProfessorDropdown")));
-    }
-
-    @FXML
     public void resetButtonClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0");
         stage.setScene(new Scene(loadFXML("searchmaster")));

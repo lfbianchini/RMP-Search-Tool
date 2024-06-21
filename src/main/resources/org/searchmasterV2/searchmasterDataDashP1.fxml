@@ -22,11 +22,6 @@
             <Circle fill="#48494b" layoutX="27.0" layoutY="284.0" radius="19.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </Pane>
-      <Button fx:id="backButton2" layoutX="532.0" layoutY="358.0" mnemonicParsing="false" onAction="#backButton2Clicked" prefHeight="28.0" prefWidth="54.0" text="BACK">
-         <font>
-            <Font name="Microsoft JhengHei UI Light" size="13.0" />
-         </font>
-      </Button>
       <Text layoutX="209.0" layoutY="115.0" scaleX="0.9" scaleY="0.9" strokeType="OUTSIDE" strokeWidth="0.0" text="RATING" textAlignment="CENTER" wrappingWidth="92.8388671875">
          <font>
             <Font name="Microsoft JhengHei UI Light" size="20.0" />
