@@ -1,3 +1,5 @@
+// Main functionality, NLP processing
+
 package org.searchmasterV2;
 
 import java.io.IOException;
@@ -22,13 +24,17 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 
 public class Professor {
+    // Selenium WebDriver and NLP Pipeline initialization
     static WebDriver driver;
     static StanfordCoreNLP pipeline;
     static Document loadedPage;
     static Connection jsoupConnection;
+
+    // Data structures
     public static Map<List<Long>, Double> sentimentList;
     static ArrayList<Review> reviewList;
 
+    // Static initializer block
     static {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -39,11 +45,13 @@ public class Professor {
         pipeline = new StanfordCoreNLP(props);
     }
 
+    // Initialize WebDriver and load professor page
     public static void initializeDriver(String professorID) {
         loadedPage = loadEntirePage(driver, professorID);
         driver.quit();
     }
 
+    // Load entire professor page using WebDriver
     public static Document loadEntirePage(WebDriver driver, String professorID) {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
@@ -77,6 +85,7 @@ public class Professor {
         return Jsoup.parse(driver.getPageSource());
     }
 
+    // Retrieve university IDs based on name query
     public static HashMap<String, String> getUniversityID(String name) throws IOException {
         String clean = formatNameForQuery(name);
         String query = "https://www.ratemyprofessors.com/search/schools?q=" + clean;
@@ -95,6 +104,7 @@ public class Professor {
         return map;
     }
 
+    // Retrieve professor IDs based on university ID and name query
     public static HashMap<String, String> getProfessorId(String universityID, String name) throws IOException {
         String clean = formatNameForQuery(name);
         String query = "https://www.ratemyprofessors.com/search/professors/" + universityID + "?q=" + clean;
@@ -114,6 +124,7 @@ public class Professor {
         return map;
     }
 
+    // Get professor's overall rating
     public static String getProfessorRating(String professorID) throws IOException {
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
         Document page = jsoupConnection.newRequest(query).get();
@@ -121,6 +132,7 @@ public class Professor {
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
+    // Get percentage of students who would take the professor again
     public static String getProfessorWouldTakeAgain(String professorID) throws IOException {
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
         Document page = jsoupConnection.newRequest(query).get();
@@ -128,6 +140,7 @@ public class Professor {
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
+    // Get the difficulty level of the professor
     public static String getProfessorDifficulty(String professorID) throws IOException {
         String query = "https://www.ratemyprofessors.com/professor/" + professorID;
         Document page = jsoupConnection.newRequest(query).get();
@@ -135,6 +148,7 @@ public class Professor {
         return Objects.requireNonNull(pageElements.first()).text();
     }
 
+    // Retrieve reviews for a professor
     public static void getProfessorReviews(String professorID) throws IOException {
         Elements reviewListRaw = Objects.requireNonNull(loadedPage.selectFirst("#ratingsList")).children();
         ArrayList<Review> reviews = new ArrayList<>();
@@ -146,6 +160,7 @@ public class Professor {
         reviewList = reviews;
     }
 
+    // Get average sentiment scores for reviews
     public static long[] getAverageProfessorSentiments(String professorID) throws IOException {
         sentimentList = Collections.synchronizedMap(new HashMap<>());
         reviewList.parallelStream().map(review -> {
@@ -170,6 +185,7 @@ public class Professor {
                 .toArray();
     }
 
+    // Consolidate sentiment scores of a review
     public static List<Long> consolidateReview(List<Long> review) {
         List<Long> newReview = new ArrayList<Long>(review);
         newReview.set(1, newReview.get(1) + newReview.get(0));
@@ -179,6 +195,7 @@ public class Professor {
         return newReview;
     }
 
+    // Consolidate sentiment scores of a review without creating a copy
     public static List<Long> consolidateReviewNonCopy(List<Long> review) {
         review.set(1, review.get(1) + review.get(0));
         review.set(3, review.get(3) + review.get(4));
@@ -187,6 +204,7 @@ public class Professor {
         return review;
     }
 
+    // Consolidate the sentiment list
     public static Map<List<Long>, Double> consolidateSentimentList() {
         Map<List<Long>, Double> sentimentListTwo = sentimentList;
         for (List<Long> review : sentimentListTwo.keySet()) {
@@ -195,6 +213,7 @@ public class Professor {
         return sentimentListTwo;
     }
 
+    // Get frequency of different sentiment categories
     public static List<Long> getSentimentListFrequency() {
         consolidateSentimentList();
         List<Long> frequencyList = Arrays.asList(0L, 0L, 0L);
@@ -211,6 +230,7 @@ public class Professor {
         return frequencyList;
     }
 
+    // Perform sentiment analysis on a paragraph of text
     public static List<Long> getSentiments(String paragraph) {
         Annotation document = pipeline.process(paragraph);
         Collection<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
@@ -236,6 +256,7 @@ public class Professor {
         return avgSentimentsList;
     }
 
+    // Format name for query (replace spaces with %20)
     public static String formatNameForQuery(String name) {
         String clean = name.trim().replaceAll(" +", " ");
         if (clean.contains(" ")) {
@@ -244,6 +265,7 @@ public class Professor {
         return clean;
     }
 
+    // Get list of grades from reviews
     public static ArrayList<String> getGrades() {
         ArrayList<String> grades = new ArrayList<>();
         for (Review review : reviewList) {
@@ -252,6 +274,7 @@ public class Professor {
         return grades;
     }
 
+    // Filter grades based on length
     private static ArrayList<String> filterGrades(ArrayList<String> grades) {
         ArrayList<String> filteredGrades = new ArrayList<>();
         for (String grade : grades) {
@@ -266,6 +289,7 @@ public class Professor {
         return filteredGrades;
     }
 
+    // Calculate average grade from filtered grades
     public static String averageGrade(ArrayList<String> grades) {
         double avgWeight = 0;
         grades = filterGrades(grades);
@@ -341,11 +365,8 @@ public class Professor {
         return avgWeightLetter;
     }
 
+    // Calculate average grade for a professor
     public static String averageProfGrade(String professorID) throws IOException {
         return averageGrade(filterGrades(getGrades()));
-    }
-
-    public static void main(String[] args) throws IOException {
-
     }
 }

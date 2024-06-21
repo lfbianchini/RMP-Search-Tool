@@ -1,3 +1,5 @@
+// Controller for Professor portion of GUI
+
 package org.searchmasterV2.controllers;
 
 import javafx.concurrent.Task;
@@ -18,6 +20,7 @@ import static org.searchmasterV2.controllers.UniversityPromptControllerPrimary.u
 
 public class ProfessorPromptControllerPrimary {
 
+    // UI elements
     @FXML
     private TextField professorTextField;
 
@@ -33,14 +36,19 @@ public class ProfessorPromptControllerPrimary {
     @FXML
     private ProgressIndicator professorProgress;
 
+    // Data management
     private static HashMap<String, String> professorMap;
     public static String professorID;
     public static String professorName;
+
+    // State control
     private boolean isLoading = false;
     private static boolean isFirst = true;
 
+    // Initialization method for the controller
     @FXML
     public void initialize() {
+        // Handle Enter key press in text field
         professorTextField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 try {
@@ -52,6 +60,7 @@ public class ProfessorPromptControllerPrimary {
         });
     }
 
+    // Handle submission of professor name search
     @FXML
     public void professorNameSubmitClicked(ActionEvent event) throws IOException {
         if (!isLoading) {
@@ -67,6 +76,7 @@ public class ProfessorPromptControllerPrimary {
                 }
             };
 
+            // Handle successful task completion
             task.setOnSucceeded(e -> {
                 professorMap = task.getValue();
                 try {
@@ -81,6 +91,7 @@ public class ProfessorPromptControllerPrimary {
                 }
             });
 
+            // Handle task failure
             task.setOnFailed(e -> {
                 try {
                     stage.setScene(new Scene(loadFXML("ProfessorError")));
@@ -94,10 +105,11 @@ public class ProfessorPromptControllerPrimary {
                 }
             });
 
-            new Thread(task).start();
+            new Thread(task).start(); // Start the task in a new thread
         }
     }
 
+    // Control UI state during loading
     private void setLoading(boolean loading) throws IOException {
         isLoading = loading;
         if (loading) {
@@ -118,12 +130,14 @@ public class ProfessorPromptControllerPrimary {
         }
     }
 
+    // Initialize progress indicator appearance
     private void initializeProgressIndicator() {
         professorProgress.setPrefSize(25, 25);
         professorProgress.setStyle("-fx-progress-color: black; -fx-opacity: 1.0;");
         professorProgress.setProgress(-1);
     }
 
+    // Handle menu button click to select professor
     @FXML
     public void professorMenuButtonClicked(MouseEvent event) throws IOException {
         professorMenuButton.getItems().clear();
@@ -143,6 +157,7 @@ public class ProfessorPromptControllerPrimary {
         professorMenuButton.show();
     }
 
+    // Handle back button click
     @FXML
     public void backButtonClicked(ActionEvent event) throws IOException {
         stage.setScene(new Scene(loadFXML("UniversityDropdown")));

@@ -1,3 +1,5 @@
+// Controller for LoadingScreen Scene
+
 package org.searchmasterV2.controllers;
 
 import javafx.animation.KeyFrame;
@@ -16,13 +18,16 @@ import static org.searchmasterV2.App.loadFXML;
 import static org.searchmasterV2.App.stage;
 
 public class LoadingScreenController implements Initializable {
+
     @FXML
     private ProgressIndicator progressIndicator;
 
     private Timeline timeline;
 
+    // Initializes the controller after FXML file is loaded
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Creates a timeline for animating the progress indicator
         timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, e -> {
                     double progress = progressIndicator.getProgress();
@@ -30,6 +35,7 @@ public class LoadingScreenController implements Initializable {
                         progress += 0.01;
                         progressIndicator.setProgress(progress);
                     } else {
+                        // Stops timeline and switches scene upon completion
                         timeline.stop();
                         try {
                             stage.setScene(new Scene(loadFXML("UniversityPrompt")));
@@ -40,7 +46,7 @@ public class LoadingScreenController implements Initializable {
                 }),
                 new KeyFrame(Duration.seconds(0.02))
         );
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        timeline.setCycleCount(Timeline.INDEFINITE); // Repeats indefinitely
+        timeline.play(); // Starts the timeline animation
     }
 }
