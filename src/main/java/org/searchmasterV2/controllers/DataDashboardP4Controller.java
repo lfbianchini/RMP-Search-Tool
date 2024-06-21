@@ -35,9 +35,14 @@ public class DataDashboardP4Controller implements Initializable {
         }
 
         CategoryAxis xAxis = (CategoryAxis) scatterChart.getXAxis();
-        xAxis.setLabel("SENTIMENT");
+        xAxis.setLabel("SENTIMENT (0 = NEGATIVE, 1 = NEUTRAL, 2 = POSITIVE)");
         xAxis.setTickLabelFont(Font.font("Arial", 14));
         xAxis.setTickLabelFill(Color.DARKGREY);
+
+        Axis<Double> yAxis = scatterChart.getYAxis();
+        yAxis.setLabel("GRADE (4.0 SCALE)");
+        yAxis.setTickLabelFont(Font.font("Arial", 14));
+        yAxis.setTickLabelFill(Color.DARKGREY);
 
         scatterChart.getData().add(series1);
     }
