@@ -1,3 +1,5 @@
+// Class for loading data
+
 package org.searchmasterV2;
 
 import java.io.IOException;

@@ -1,3 +1,5 @@
+// Controller for DataDashP5 Scene
+
 package org.searchmasterV2.controllers;
 
 import javafx.event.ActionEvent;
@@ -14,13 +16,16 @@ import static org.searchmasterV2.App.stage;
 
 public class DataDashboardP5Controller implements Initializable {
 
+    // Initializes the controller after FXML file is loaded
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
+    // Action method for switching to DataDashP4 scene
     @FXML
     public void pageFourClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0 ");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP4")));
+        stage.setScene(new Scene(loadFXML("DataDashP4")));
     }
 }

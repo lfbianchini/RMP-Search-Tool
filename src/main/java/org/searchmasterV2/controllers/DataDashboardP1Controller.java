@@ -1,3 +1,5 @@
+// Controller for DataDashP1 Scene
+
 package org.searchmasterV2.controllers;
 
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import static org.searchmasterV2.controllers.ProfessorPromptControllerPrimary.pr
 
 public class DataDashboardP1Controller {
 
+    // Injected FXML elements
     @FXML
     private Text professorNameText;
 
@@ -35,9 +38,11 @@ public class DataDashboardP1Controller {
     private Text difficultyText;
 
     @FXML
-    Hyperlink professorLink = new Hyperlink();
+    private Hyperlink professorLink = new Hyperlink();
 
+    // Initializes the controller after FXML file is loaded
     public void initialize() throws IOException {
+        // Populate UI elements if stage title is "SMV1.0"
         if (stage.getTitle().equals("SMV1.0")) {
             professorNameText.setText(professorName.toUpperCase());
             ratingText.setText(data.getProfessorRating() + "/5");
@@ -46,6 +51,7 @@ public class DataDashboardP1Controller {
             difficultyText.setText(data.getProfessorLevelOfDifficulty() + "/5");
         }
 
+        // Action for clicking professorLink to open RateMyProfessors link
         professorLink.setOnAction(event -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://www.ratemyprofessors.com/professor/" + professorID));
@@ -55,10 +61,10 @@ public class DataDashboardP1Controller {
         });
     }
 
+    // Action method for switching to DataDashP2 scene
     @FXML
     public void pageTwoClicked(ActionEvent event) throws IOException {
         stage.setTitle("SMV1.0");
-        stage.setScene(new Scene(loadFXML("searchmasterDataDashP2")));
-
+        stage.setScene(new Scene(loadFXML("DataDashP2")));
     }
 }
