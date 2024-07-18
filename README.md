@@ -1,3 +1,5 @@
+# RMP-Search-Tool
+
 App that web scrapes Rate My Professor and performs sentiment analysis on reviews.
 
 Download JAR file to run here:
